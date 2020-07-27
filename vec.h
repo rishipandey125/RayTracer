@@ -2,6 +2,7 @@
 #define VEC_H
 
 class vec {
+  float x,y,z;
   public:
     vec();
     vec(float i, float j, float k);
@@ -12,10 +13,7 @@ class vec {
     vec operator-(const vec &vector);
     vec operator*(const vec &vector);
     void print();
-  private:
-    float x;
-    float y;
-    float z;
+
 };
 
 using point = vec; //defines a 3d point
