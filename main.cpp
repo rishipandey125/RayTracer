@@ -1,5 +1,6 @@
 #include <iostream>
 
+
 int main() {
   const int image_width = 256;
   const int image_height = 256;
