@@ -15,20 +15,20 @@ int main() {
   float focal_length = 1.0; // sets viewport at z = -1
 
   //Render Details
-  std::cout << viewport_width << std::endl;
- 
-  // std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
-  // for (int j = image_height-1; j >= 0; j--) {
-  //     for (int i = 0; i < image_width; i++) {
-  //         auto r = double(i) / (image_width-1);
-  //         auto g = double(j) / (image_height-1);
-  //         auto b = 0.25;
-  //         color pixel = vec(r,g,b);
-  //         int ir = static_cast<int>(255.999 * pixel.x);
-  //         int ig = static_cast<int>(255.999 * pixel.y);
-  //         int ib = static_cast<int>(255.999 * pixel.z);
-  //         std::cout << ir << ' ' << ig << ' ' << ib << '\n';
-  //     }
-  // }
+  // set viewport rays to cast through image loop
+  std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+  for (int j = image_height-1; j >= 0; j--) {
+      for (int i = 0; i < image_width; i++) {
+          auto r = double(i) / (image_width-1);
+          auto g = double(j) / (image_height-1);
+          auto b = 0.25;
+          color pixel = vec(r,g,b);
+          int ir = static_cast<int>(255.999 * pixel.x);
+          int ig = static_cast<int>(255.999 * pixel.y);
+          int ib = static_cast<int>(255.999 * pixel.z);
+          std::cout << ir << ' ' << ig << ' ' << ib << '\n';
+      }
+  }
   return 0;
 }
+ok
