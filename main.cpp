@@ -23,7 +23,7 @@ int main() {
           point viewport_point((u*viewport_width)-(viewport_width/2),(v*viewport_height)-(viewport_height/2),-1*focal_length);
           vec direction = viewport_point-camera_origin;
           ray cast_ray(camera_origin,direction);
-
+          // 
           // auto r = double(i) / (image_width-1);
           // auto g = double(j) / (image_height-1);
           // auto b = 0.25;
