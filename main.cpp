@@ -4,9 +4,15 @@
 
 int main() {
   float aspect_ratio = 16.0/9.0;
+  //Image Details
   int image_width = 400;
   int image_height = (int)(image_width/aspect_ratio);
+
+  //Camera Details
   point camera_origin(0,0,0);
+  float viewport_height = 2.0;
+  float viewport_width = viewport_height*aspect_ratio;
+  float focal_length = 1.0;
   
   // std::cout << image_height << std::endl;
 
