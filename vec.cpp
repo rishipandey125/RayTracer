@@ -13,11 +13,11 @@ vec::vec(float i, float j, float k) {
 }
 
 float vec::length() {
-  return math->sqrt((this->x*this->x)+(this->y*this->y)+(this->z*this->z));
+  return sqrt((this->x*this->x)+(this->y*this->y)+(this->z*this->z));
 }
 
 void vec::unit() {
-  float length = math->sqrt((this->x*this->x)+(this->y*this->y)+(this->z*this->z));
+  float length = sqrt((this->x*this->x)+(this->y*this->y)+(this->z*this->z));
   this->x = this->x/length;
   this->y = this->y/length;
   this->z = this->z/length;

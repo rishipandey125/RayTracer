@@ -1,5 +1,5 @@
 #include <iostream>
-#include "vec3.cpp"
+#include "vec.cpp"
 
 int main() {
   // const int image_width = 256;
@@ -19,7 +19,7 @@ int main() {
   //         std::cout << ir << ' ' << ig << ' ' << ib << '\n';
   //     }
   // }
-  vec3 empty();
-  empty.print();
+  color pixel;
+  pixel.print();
   return 0;
 }
