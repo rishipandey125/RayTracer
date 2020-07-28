@@ -17,7 +17,7 @@ float vec::length() {
 }
 
 void vec::unit() {
-  float length = sqrt((this->x*this->x)+(this->y*this->y)+(this->z*this->z));
+  float length = this->length();
   this->x = this->x/length;
   this->y = this->y/length;
   this->z = this->z/length;
