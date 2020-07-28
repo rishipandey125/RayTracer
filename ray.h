@@ -5,7 +5,7 @@
 class ray {
   public:
     ray();
-    ray(const point &rayOrigin, const vec &rayDirection);
+    ray(const point &ray_origin, const vec &ray_direction);
     point getPointAt(float t);
     point origin;
     vec direction;

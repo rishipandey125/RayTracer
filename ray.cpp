@@ -1,9 +1,9 @@
 #include "ray.h"
 ray::ray() {}
 
-ray::ray(const point &rayOrigin, const vec &rayDirection) {
-  this->origin = rayOrigin;
-  this->direction = rayDirection;
+ray::ray(const point &ray_origin, const vec &ray_direction) {
+  this->origin = ray_origin;
+  this->direction = ray_direction;
 }
 
 point ray::getPointAt(float t) {
