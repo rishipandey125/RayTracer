@@ -6,6 +6,6 @@ ray::ray(const point &rayOrigin, const vec &rayDirection) {
   this->direction = rayDirection;
 }
 
-float ray::getPointAt(float t) {
-  return this->origin + (t * this->direction);
+point ray::getPointAt(float t) {
+  return this->origin + (this->direction * t);
 }

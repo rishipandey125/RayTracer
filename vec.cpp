@@ -42,5 +42,5 @@ vec vec::operator*(const float scalar) {
 }
 
 void vec::print() {
-  std::cout << this->x << " " << this->y << " " << this->z << std::endl;
+  std::cout << "<" <<  this->x << "," << this->y << "," << this->z << ">" << std::endl;
 }
