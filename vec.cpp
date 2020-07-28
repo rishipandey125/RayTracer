@@ -12,31 +12,35 @@ vec::vec(float i, float j, float k) {
   this->z = k;
 }
 
-float length() {
+float vec::length() {
   return math->sqrt((this->x*this->x)+(this->y*this->y)+(this->z*this->z));
 }
 
-void unit() {
+void vec::unit() {
   float length = math->sqrt((this->x*this->x)+(this->y*this->y)+(this->z*this->z));
   this->x = this->x/length;
   this->y = this->y/length;
   this->z = this->z/length;
 }
-float dot(const vec &vector) {
-  return (this->x*vector->x) + (this->y*vector->y) + (this->z*vector->z);
+float vec::dot(const vec &vector) {
+  return (this->x*vector.x) + (this->y*vector.y) + (this->z*vector.z);
 }
 
-vec operator+(const vec &vector) {
-  return vec(this->x + vector->x, this->y + vector->y, this->z + vector->z);
+vec vec::operator+(const vec &vector) {
+  return vec(this->x + vector.x, this->y + vector.y, this->z + vector.z);
 }
 
-vec operator-(const vec &vector) {
-  return vec(this->x - vector->x, this->y - vector->y, this->z - vector->z);
+vec vec::operator-(const vec &vector) {
+  return vec(this->x - vector.x, this->y - vector.y, this->z - vector.z);
 }
-vec operator*(const vec &vector) {
-  return vec(this->x * vector->x, this->y * vector->y, this->z * vector->z);
+vec vec::operator*(const vec &vector) {
+  return vec(this->x * vector.x, this->y * vector.y, this->z * vector.z);
 }
 
-void print() {
-  cout << this->x << " " << this->y << " " << this->z << endl;
+vec vec::operator*(const float scalar) {
+  return vec(this->x * scalar, this->y * scalar, this->z * scalar);
+}
+
+void vec::print() {
+  std::cout << this->x << " " << this->y << " " << this->z << std::endl;
 }
