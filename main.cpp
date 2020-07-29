@@ -35,6 +35,7 @@ int main() {
   float viewport_height = 2.0;
   float viewport_width = viewport_height*aspect_ratio;
   float focal_length = 1.0; // sets viewport at z = -1
+  float viewport_z = -1*focal_length;
   int sphere_count = 0;
   int not_hit_count = 0;
   //Render Details
@@ -43,10 +44,11 @@ int main() {
   //we need to fix our vec class it is not working that well
   point viewport_point;
   for (int j = image_height-1; j >= 0; j--) {
+      float v = j/image_height;
+      float viewport_y = (v*viewport_height)-(viewport_height/2);
       for (int i = 0; i < image_width; i++) {
           float u = i/image_width;
-          float v = j/image_height;
-          viewport_point = point((u*viewport_width)-(viewport_width/2),(v*viewport_height)-(viewport_height/2),-1*focal_length);
+          viewport_point = point((u*viewport_width)-(viewport_width/2),viewport_y,viewport_z);
           viewport_point.print();
           //creates the same viewport point everytime, this ends up creating the same ray everytime, meaning we never get a hit because we are shooting the same ray
           vec direction = viewport_point-camera_origin;
