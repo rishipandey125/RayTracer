@@ -40,6 +40,7 @@ int main() {
   //Render Details
   // set viewport rays to cast through image loop
   // std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+  //we need to fix our vec class it is not working that well
   point viewport_point;
   for (int j = image_height-1; j >= 0; j--) {
       for (int i = 0; i < image_width; i++) {
