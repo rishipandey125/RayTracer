@@ -2,6 +2,7 @@
 #include "vec.cpp"
 #include "ray.cpp"
 #include "sphere.cpp"
+
 int main() {
   float aspect_ratio = 16.0/9.0;
   //Image Details
