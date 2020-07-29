@@ -10,19 +10,22 @@ void output_color(const color &pixel) {
   std::cout << r << ' ' << g << ' ' << b << '\n';
 }
 
-bool hit_sphere(const ray &casted_ray, const sphere &object) {
+bool hit_sphere(ray &casted_ray,const sphere &object) {
   vec ac = casted_ray.origin - object.center;
   float a = casted_ray.direction.dot(casted_ray.direction);
   float b = 2 * casted_ray.direction.dot(ac);
   float c = ac.dot(ac) - (object.radius*object.radius);
   float discriminant = (b*b) - (4*a*c);
-  return (discriminant > 0);
+  if (discriminant > 0) {
+    return true;
+  }
+  return false;
 }
 
 int main() {
   //Image Details
   float aspect_ratio = 16.0/9.0;
-  point sphere_center(0,0,-1);
+  point sphere_center(0,0,-1.5);
   sphere first_sphere(sphere_center,0.5);
   int image_width = 400;
   int image_height = (int)(image_width/aspect_ratio);
@@ -32,7 +35,8 @@ int main() {
   float viewport_height = 2.0;
   float viewport_width = viewport_height*aspect_ratio;
   float focal_length = 1.0; // sets viewport at z = -1
-
+  int sphere_count = 0;
+  int not_hit_count = 0;
   //Render Details
   // set viewport rays to cast through image loop
   // std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
@@ -44,13 +48,16 @@ int main() {
           vec direction = viewport_point-camera_origin;
           ray cast_ray(camera_origin,direction);
           if (hit_sphere(cast_ray,first_sphere)) {
-            std::cout << "Hit Sphere" << std::endl;
+            sphere_count += 1;
             //color red
           } else {
-            continue;
+            not_hit_count += 1;
             //color white
           }
       }
   }
+  std::cout << "Sphere Hit Count: " << sphere_count << std::endl;
+  std::cout << "Not Hit Count: " << not_hit_count << std::endl;
+
   return 0;
 }
