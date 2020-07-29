@@ -40,11 +40,12 @@ int main() {
   //Render Details
   // set viewport rays to cast through image loop
   // std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+  point viewport_point;
   for (int j = image_height-1; j >= 0; j--) {
       for (int i = 0; i < image_width; i++) {
           float u = i/image_width;
           float v = j/image_height;
-          point viewport_point((u*viewport_width)-(viewport_width/2),(v*viewport_height)-(viewport_height/2),-1*focal_length);
+          viewport_point = point((u*viewport_width)-(viewport_width/2),(v*viewport_height)-(viewport_height/2),-1*focal_length);
           viewport_point.print();
           //creates the same viewport point everytime, this ends up creating the same ray everytime, meaning we never get a hit because we are shooting the same ray
           vec direction = viewport_point-camera_origin;
