@@ -2,7 +2,7 @@
 #include "vec.cpp"
 #include "ray.cpp"
 #include "sphere.cpp"
-
+//raytracing hit sphere makes sense, but is it disc>0 or disc>=0
 int main() {
   float aspect_ratio = 16.0/9.0;
   //Image Details
