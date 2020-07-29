@@ -45,6 +45,8 @@ int main() {
           float u = i/image_width;
           float v = j/image_height;
           point viewport_point((u*viewport_width)-(viewport_width/2),(v*viewport_height)-(viewport_height/2),-1*focal_length);
+          viewport_point.print();
+          //creates the same viewport point everytime, this ends up creating the same ray everytime, meaning we never get a hit because we are shooting the same ray
           vec direction = viewport_point-camera_origin;
           ray cast_ray(camera_origin,direction);
           if (hit_sphere(cast_ray,first_sphere)) {
