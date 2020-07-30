@@ -30,6 +30,12 @@ vec vec::operator+(const vec &vector) {
   return vec(this->x + vector.x, this->y + vector.y, this->z + vector.z);
 }
 
+void vec::operator=(const vec &vector) {
+  this->x = vector.x;
+  this->y = vector.y;
+  this->z = vector.z;
+}
+
 vec vec::operator-(const vec &vector) {
   return vec(this->x - vector.x, this->y - vector.y, this->z - vector.z);
 }
