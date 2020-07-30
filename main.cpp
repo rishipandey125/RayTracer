@@ -40,24 +40,25 @@ int main() {
   int not_hit_count = 0;
   //Render Details
   // set viewport rays to cast through image loop
-  // std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+  std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
   //we need to fix our vec class it is not working that well
   point viewport_point;
+  color red(1,0,0);
+  color white(1,1,1);
   for (int j = image_height-1; j >= 0; j--) {
       float v = float(j)/image_height;
       float viewport_y = (viewport_height/2)-(v*viewport_height);
       for (int i = 0; i < image_width; i++) {
           float u = float(i)/image_width;
           viewport_point = point((u*viewport_width)-(viewport_width/2),viewport_y,viewport_z);
-          viewport_point.print();
           //creates the same viewport point everytime, this ends up creating the same ray everytime, meaning we never get a hit because we are shooting the same ray
           vec direction = viewport_point-camera_origin;
           ray cast_ray(camera_origin,direction);
           if (hit_sphere(cast_ray,first_sphere)) {
-            sphere_count += 1;
+            output_color(red);
             //color red
           } else {
-            not_hit_count += 1;
+            output_color(white);
             //color white
           }
       }
