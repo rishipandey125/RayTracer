@@ -4,7 +4,7 @@
 #include "sphere.cpp"
 #include "camera.cpp"
 
-void output_color(const color &pixel) {
+void output_color(const color &pixel, int samples) {
   int r = static_cast<int>(255.999 * pixel.x);
   int g = static_cast<int>(255.999 * pixel.y);
   int b = static_cast<int>(255.999 * pixel.z);
