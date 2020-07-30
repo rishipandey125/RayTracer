@@ -43,9 +43,9 @@ bool hit_sphere(ray &casted_ray,const sphere &object) {
 int main() {
   camera cam;
   sphere first_sphere(point(0,0,-1),0.5);
-  int image_width = 400;
+  int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 1000;
+  int samples = 100;
   //Render Details
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
   for (int j = image_height-1; j >= 0; j--) {
@@ -58,7 +58,7 @@ int main() {
             if (hit_sphere(cast_ray,first_sphere)) {
               pixel = pixel + shade(true);
             } else {
-              pixel = pixel + shade(false);
+              pixel = pixel + shade(false); //shade bg
             }
           }
         output_color(pixel,samples);
