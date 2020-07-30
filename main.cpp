@@ -2,6 +2,7 @@
 #include "vec.cpp"
 #include "ray.cpp"
 #include "sphere.cpp"
+#include "camera.cpp"
 
 void output_color(const color &pixel) {
   int r = static_cast<int>(255.999 * pixel.x);
@@ -27,29 +28,18 @@ bool hit_sphere(ray &casted_ray,const sphere &object) {
 
 //shoot a ray, loop over objects in the scene and if no hit, render bg (include t_nearest)
 int main() {
-  // Image Details
-  float aspect_ratio = 16.0/9.0;
-  sphere first_sphere(point(0,0,-10),0.5);
+  camera cam;
+  sphere first_sphere(point(0,0,-1),0.5);
   int image_width = 400;
-  int image_height = (int)(image_width/aspect_ratio);
-
-  //Camera Details
-  point camera_origin(0,0,0);
-  float viewport_height = 2.0;
-  float viewport_width = viewport_height*aspect_ratio;
-  float focal_length = 1.0; // sets viewport at z = -1
-  float viewport_z = -1*focal_length;
+  int image_height = (int)(image_width/cam.aspect_ratio);
 
   //Render Details
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
   for (int j = image_height-1; j >= 0; j--) {
       float v = float(j)/image_height;
-      float viewport_y = (viewport_height/2)-(v*viewport_height);
       for (int i = 0; i < image_width; i++) {
           float u = float(i)/image_width;
-          point viewport_point((u*viewport_width)-(viewport_width/2),viewport_y,viewport_z);
-          vec direction = viewport_point-camera_origin;
-          ray cast_ray(camera_origin,direction);
+          ray cast_ray = cam.get_ray(u,v);
           if (hit_sphere(cast_ray,first_sphere)) {
             output_color(color(1,0,0));
           } else {

@@ -16,3 +16,13 @@ camera::camera(point camera_origin, float camera_aspect_ratio,
   this->viewport_width = this->viewport_height*this->aspect_ratio;
   this->focal_length = camera_focal_length;
 }
+
+ray camera::get_ray(float &u, float &v) {
+  float viewport_x = (u*this->viewport_width)-(this->viewport_width/2);
+  float viewport_y = (this->viewport_height/2)-(v*this->viewport_height);
+  float viewport_z = -1*this->focal_length;
+  point viewport_point(viewport_x,viewport_y,viewport_z);
+  vec direction = viewport_point-this->origin;
+  ray cast_ray(this->origin,direction);
+  return cast_ray;
+}
