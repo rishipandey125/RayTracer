@@ -23,7 +23,7 @@ bool hit_sphere(ray &casted_ray,const sphere &object) {
 }
 
 int main() {
-  //Image Details
+  // Image Details
   float aspect_ratio = 16.0/9.0;
   point sphere_center(0,0,-1.5);
   sphere first_sphere(sphere_center,0.5);

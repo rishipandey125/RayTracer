@@ -10,7 +10,7 @@ class vec {
     float dot(const vec &vector);
     vec operator+(const vec &vector);
     vec operator-(const vec &vector);
-    void operator=(const vec &vector)
+    void operator=(const vec &vector);
     vec operator*(const vec &vector);
     vec operator*(const float scalar);
     void print();
