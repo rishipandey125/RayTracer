@@ -17,6 +17,8 @@ bool hit_sphere(ray &casted_ray,const sphere &object) {
   float c = ac.dot(ac) - (object.radius*object.radius);
   float discriminant = (b*b) - (4*a*c);
   if (discriminant > 0) {
+    // (-b-sqrt(disc))/2a = t (the smallest value t can be (from there you can calc the point))
+    //point impact = casted_ray.origin + (t * casted_ray.direction)
     return true;
   }
   return false;
