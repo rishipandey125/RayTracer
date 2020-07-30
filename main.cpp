@@ -24,7 +24,7 @@ bool hit_sphere(ray &casted_ray,const sphere &object) {
   // return something else that indicates no point of hit
   return false;
 }
-
+//shoot a ray, loop over objects in the scene and if no hit, render bg
 int main() {
   // Image Details
   float aspect_ratio = 16.0/9.0;
