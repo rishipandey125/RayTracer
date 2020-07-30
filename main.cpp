@@ -44,8 +44,8 @@ int main() {
   //we need to fix our vec class it is not working that well
   point viewport_point;
   for (int j = image_height-1; j >= 0; j--) {
-      float v = float(j)/image_height; //this is a backwards loop check this math
-      float viewport_y = (v*viewport_height)-(viewport_height/2);
+      float v = float(j)/image_height; 
+      float viewport_y = (viewport_height/2)-(v*viewport_height);
       for (int i = 0; i < image_width; i++) {
           float u = float(i)/image_width;
           std::cout << u << std::endl;
