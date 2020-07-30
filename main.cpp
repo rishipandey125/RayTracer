@@ -44,13 +44,12 @@ int main() {
   //we need to fix our vec class it is not working that well
   point viewport_point;
   for (int j = image_height-1; j >= 0; j--) {
-      float v = float(j)/image_height; 
+      float v = float(j)/image_height;
       float viewport_y = (viewport_height/2)-(v*viewport_height);
       for (int i = 0; i < image_width; i++) {
           float u = float(i)/image_width;
-          std::cout << u << std::endl;
           viewport_point = point((u*viewport_width)-(viewport_width/2),viewport_y,viewport_z);
-          // viewport_point.print();
+          viewport_point.print();
           //creates the same viewport point everytime, this ends up creating the same ray everytime, meaning we never get a hit because we are shooting the same ray
           vec direction = viewport_point-camera_origin;
           ray cast_ray(camera_origin,direction);
