@@ -25,8 +25,7 @@ bool hit_sphere(ray &casted_ray,const sphere &object) {
 int main() {
   // Image Details
   float aspect_ratio = 16.0/9.0;
-  point sphere_center(0,0,-1.5);
-  sphere first_sphere(sphere_center,0.5);
+  sphere first_sphere(point(0,0,-1.5),0.5);
   int image_width = 400;
   int image_height = (int)(image_width/aspect_ratio);
 
@@ -36,35 +35,23 @@ int main() {
   float viewport_width = viewport_height*aspect_ratio;
   float focal_length = 1.0; // sets viewport at z = -1
   float viewport_z = -1*focal_length;
-  int sphere_count = 0;
-  int not_hit_count = 0;
+
   //Render Details
-  // set viewport rays to cast through image loop
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
-  //we need to fix our vec class it is not working that well
-  point viewport_point;
-  color red(1,0,0);
-  color white(1,1,1);
   for (int j = image_height-1; j >= 0; j--) {
       float v = float(j)/image_height;
       float viewport_y = (viewport_height/2)-(v*viewport_height);
       for (int i = 0; i < image_width; i++) {
           float u = float(i)/image_width;
-          viewport_point = point((u*viewport_width)-(viewport_width/2),viewport_y,viewport_z);
-          //creates the same viewport point everytime, this ends up creating the same ray everytime, meaning we never get a hit because we are shooting the same ray
+          point viewport_point((u*viewport_width)-(viewport_width/2),viewport_y,viewport_z);
           vec direction = viewport_point-camera_origin;
           ray cast_ray(camera_origin,direction);
           if (hit_sphere(cast_ray,first_sphere)) {
-            output_color(red);
-            //color red
+            output_color(color(1,0,0));
           } else {
-            output_color(white);
-            //color white
+            output_color(color(1,1,1));
           }
       }
   }
-  std::cout << "Sphere Hit Count: " << sphere_count << std::endl;
-  std::cout << "Not Hit Count: " << not_hit_count << std::endl;
-
   return 0;
 }
