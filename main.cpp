@@ -21,13 +21,14 @@ bool hit_sphere(ray &casted_ray,const sphere &object) {
     //point impact = casted_ray.origin + (t * casted_ray.direction)
     return true;
   }
+  // return something else that indicates no point of hit
   return false;
 }
 
 int main() {
   // Image Details
   float aspect_ratio = 16.0/9.0;
-  sphere first_sphere(point(0,0,-1.5),0.5);
+  sphere first_sphere(point(0,0,-10),0.5);
   int image_width = 400;
   int image_height = (int)(image_width/aspect_ratio);
 
