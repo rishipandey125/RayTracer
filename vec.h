@@ -12,7 +12,8 @@ class vec {
     vec operator-(const vec &vector);
     void operator=(const vec &vector);
     vec operator*(const vec &vector);
-    vec operator*(const float scalar);
+    vec operator*(const float &scalar);
+    void clamp();
     void print();
     float x,y,z;
 
