@@ -1,15 +1,24 @@
 #include <iostream>
+#include <vector>
 #include <cstdlib>
+#include <cmath>
 #include "vec.cpp"
 #include "ray.cpp"
 #include "sphere.cpp"
 #include "camera.cpp"
 
-color shade(bool hit) {
-  if (hit) {
-    return color(1,0,0);
+
+//ground is just another sphere (just super large) this actually makes sense
+color shade(ray &casted_ray, std::vector <sphere> &objects) {
+  color pixel(1,1,1);
+  // float closest = float(RAND_MAX); //closest t (whatever is closest to camera is what you render)
+  for (int i = 0; i < objects.size(); i++) {
+    if (objects[i].hit_sphere(casted_ray)) {
+      pixel = color(1,0,0);
+      //if this hit is closer than the previous, update the color
+    }
   }
-  return color(1,1,1);
+  return pixel;
 }
 
 float random_float() {
@@ -26,24 +35,13 @@ void output_color(color &pixel, int samples) {
   std::cout << r << ' ' << g << ' ' << b << '\n';
 }
 
-bool hit_sphere(ray &casted_ray,const sphere &object) {
-  vec ac = casted_ray.origin - object.center;
-  float a = casted_ray.direction.dot(casted_ray.direction);
-  float b = 2 * casted_ray.direction.dot(ac);
-  float c = ac.dot(ac) - (object.radius*object.radius);
-  float discriminant = (b*b) - (4*a*c);
-  if (discriminant > 0) {
-    // (-b-sqrt(disc))/2a = t (the smallest value t can be (from there you can calc the point))
-    //point impact = casted_ray.origin + (t * casted_ray.direction)
-    return true;
-  }
-  return false;
-}
 //shouldnt you only antialias on tangents?
 //shoot a ray, loop over objects in the scene and if no hit, render bg (include t_nearest)
 int main() {
   camera cam;
+  sphere world_sphere(point(0,-100.5,-1),100);
   sphere first_sphere(point(0,0,-1),0.5);
+  std::vector <sphere> spheres = {world_sphere,first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
   int samples = 100;
@@ -56,11 +54,7 @@ int main() {
             float u = (float(i) + random_float())/image_width;
             float v = (float(j) + random_float())/image_height;
             ray cast_ray = cam.get_ray(u,v);
-            if (hit_sphere(cast_ray,first_sphere)) {
-              pixel = pixel + shade(true);
-            } else {
-              pixel = pixel + shade(false); //shade bg
-            }
+            pixel = pixel + shade(cast_ray,spheres);
           }
         output_color(pixel,samples);
       }
