@@ -15,6 +15,7 @@ color shade(bool hit) {
 float random_float() {
   return (float) rand()/RAND_MAX;
 }
+
 void output_color(color &pixel, int samples) {
   float ratio = 1.0/float(samples);
   color output_pixel = pixel*ratio;
