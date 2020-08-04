@@ -19,7 +19,8 @@ camera::camera(point camera_origin, float camera_aspect_ratio,
 
 ray camera::get_ray(float &u, float &v) {
   float viewport_x = (u*this->viewport_width)-(this->viewport_width/2);
-  float viewport_y = (this->viewport_height/2)-(v*this->viewport_height);
+  //v = 0.6 should corr to -0.8 : 1-(0.6*2)
+  float viewport_y = -1*(this->viewport_height/2)-(v*this->viewport_height);
   float viewport_z = -1*this->focal_length;
   point viewport_point(viewport_x,viewport_y,viewport_z);
   vec direction = viewport_point-this->origin;
