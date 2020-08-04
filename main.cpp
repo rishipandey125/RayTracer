@@ -41,11 +41,11 @@ int main() {
   camera cam;
   //my axis system is not actually working well, and i am getting a distortion on my sphere geometry
   // sphere world_sphere(point(0,-50.5,-1),50);
-  sphere first_sphere(point(0,0,-1),0.5);
+  sphere first_sphere(point(0.5,-.5,-1),0.5);
   std::vector <sphere> spheres = {first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 2;
+  int samples = 1;
   //Render Details
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
   for (int j = image_height-1; j >= 0; j--) {
@@ -55,6 +55,8 @@ int main() {
             float u = (float(i) + random_float())/image_width;
             float v = (float(j) + random_float())/image_height;
             ray cast_ray = cam.get_ray(u,v);
+            // vec dir = cast_ray.direction;
+            // dir.print();
             pixel = pixel + shade(cast_ray,spheres);
           }
         output_color(pixel,samples);
