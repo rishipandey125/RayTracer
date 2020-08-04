@@ -45,7 +45,7 @@ int main() {
   std::vector <sphere> spheres = {first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 100;
+  int samples = 2;
   //Render Details
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
   for (int j = image_height-1; j >= 0; j--) {
