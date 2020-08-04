@@ -9,5 +9,6 @@ class sphere {
     bool hit_sphere(ray &casted_ray);
     point center;
     float radius;
+    // color sphere_color;
 };
 #endif
