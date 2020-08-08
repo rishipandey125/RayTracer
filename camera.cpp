@@ -1,7 +1,7 @@
 #include "camera.h"
 
 camera::camera() {
-  this->origin = point(0,0,0);
+  this->origin = point(0.0,0.0,0.0);
   this->aspect_ratio = 16.0/9.0;
   this->viewport_height = 2.0;
   this->viewport_width = this->viewport_height*this->aspect_ratio;
@@ -22,7 +22,7 @@ ray camera::get_ray(float &u, float &v) {
   //if we are looping from bottom left corner this would be the right thing, but if we are writing to ppm images
   //ppm images are written from the top left corner, therefore even if we are shooting rays correctly we are flipping
   //those pixels when outputting the rays (maybe we write these to an array) and have a separate render func?
-  //lets loop from the top left, but maintain the correct viewport axis 
+  //lets loop from the top left, but maintain the correct viewport axis
   float viewport_y = -1.0*((this->viewport_height/2)-(v*this->viewport_height));
   float viewport_z = -1.0*this->focal_length;
   point viewport_point(viewport_x,viewport_y,viewport_z);
