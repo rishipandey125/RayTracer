@@ -41,14 +41,13 @@ int main() {
   camera cam;
   //fix the mirrored world sphere issue
   sphere world_sphere(point(0,-50.5,-1),50);
-  sphere first_sphere(point(0,-0.5,-1),0.5);
-  std::vector <sphere> spheres = {world_sphere,first_sphere};
+  sphere first_sphere(point(0,0.5,-1),0.5);
+  std::vector <sphere> spheres = {first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
   int samples = 1;
   //Render Details
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
-  // for (int j = image_height-1; j >= 0; j--) {
     for (int j = 0; j < image_height; j++) {
       for (int i = 0; i < image_width; i++) {
           color pixel;

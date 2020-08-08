@@ -19,7 +19,11 @@ camera::camera(point camera_origin, float camera_aspect_ratio,
 
 ray camera::get_ray(float &u, float &v) {
   float viewport_x = (u*this->viewport_width)-(this->viewport_width/2);
-  float viewport_y = (this->viewport_height/2)-(v*this->viewport_height);
+  //if we are looping from bottom left corner this would be the right thing, but if we are writing to ppm images
+  //ppm images are written from the top left corner, therefore even if we are shooting rays correctly we are flipping
+  //those pixels when outputting the rays (maybe we write these to an array) and have a separate render func?
+  //lets loop from the top left, but maintain the correct viewport axis 
+  float viewport_y = -1.0*((this->viewport_height/2)-(v*this->viewport_height));
   float viewport_z = -1.0*this->focal_length;
   point viewport_point(viewport_x,viewport_y,viewport_z);
   vec direction = viewport_point-this->origin;
