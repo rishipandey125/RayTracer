@@ -39,9 +39,9 @@ void output_color(color &pixel, int samples) {
 //shoot a ray, loop over objects in the scene and if no hit, render bg (include t_nearest)
 int main() {
   camera cam;
-  //my axis system is not actually working well, and i am getting a distortion on my sphere geometry
+  //fix the mirrored world sphere issue
   sphere world_sphere(point(0,-50.5,-1),50);
-  sphere first_sphere(point(0,0,-1),0.5);
+  sphere first_sphere(point(0,-0.5,-1),0.5);
   std::vector <sphere> spheres = {world_sphere,first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
