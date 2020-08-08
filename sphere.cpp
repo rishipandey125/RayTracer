@@ -7,6 +7,7 @@ sphere::sphere(point sphere_center, float sphere_rad) {
   this->radius = sphere_rad;
 }
 
+//problem with ground sphere must be here
 bool sphere::hit_sphere(ray &casted_ray) {
   vec ac = casted_ray.origin - this->center;
   float a = casted_ray.direction.dot(casted_ray.direction);
