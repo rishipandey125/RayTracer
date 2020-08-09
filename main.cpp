@@ -8,13 +8,17 @@
 #include "camera.cpp"
 
 
-//ground is just another sphere (just super large) this actually makes sense
 color shade(ray &casted_ray, std::vector <sphere> &objects) {
   color pixel(1,1,1);
-  // float closest = float(RAND_MAX); //closest t (whatever is closest to camera is what you render)
+  float closest = float(RAND_MAX); //closest t (whatever is closest to camera is what you render)
   for (int i = 0; i < objects.size(); i++) {
-    if (objects[i].hit_sphere(casted_ray) > 0.0) {
-      pixel = color(1,0,0);
+    float t = objects[i].hit_sphere(casted_ray);
+    if (t > 0.0) {
+      //hit
+      if (t < closest) {
+        closest = t;
+        pixel = objects[i].sphere_color;
+      }
       //if this hit is closer than the previous, update the color
     }
   }
@@ -35,13 +39,10 @@ void output_color(color &pixel, int samples) {
   std::cout << r << ' ' << g << ' ' << b << '\n';
 }
 
-//shouldnt you only antialias on tangents?
-//shoot a ray, loop over objects in the scene and if no hit, render bg (include t_nearest)
 int main() {
   camera cam;
-  //fix the mirrored world sphere issue
-  sphere world_sphere(point(0,-50.5,-1),50);
-  sphere first_sphere(point(0.0,0.0,-1),0.5);
+  sphere world_sphere(point(0,-50.5,-1),50,color(0,1,0));
+  sphere first_sphere(point(0.0,0.0,-1),0.5,color(1,0,0));
   std::vector <sphere> spheres = {world_sphere,first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
