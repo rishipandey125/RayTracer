@@ -13,8 +13,7 @@ color shade(ray &casted_ray, std::vector <sphere> &objects) {
   color pixel(1,1,1);
   // float closest = float(RAND_MAX); //closest t (whatever is closest to camera is what you render)
   for (int i = 0; i < objects.size(); i++) {
-    if (objects[i].hit_sphere(casted_ray)) {
-      // std::cout << "True" << std::endl;
+    if (objects[i].hit_sphere(casted_ray) > 0.0) {
       pixel = color(1,0,0);
       //if this hit is closer than the previous, update the color
     }
@@ -42,16 +41,11 @@ int main() {
   camera cam;
   //fix the mirrored world sphere issue
   sphere world_sphere(point(0,-50.5,-1),50);
-  sphere first_sphere(point(0.0,0.0,-1),0.5);
+  // sphere first_sphere(point(0.0,0.0,-1),0.5);
   std::vector <sphere> spheres = {world_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
   int samples = 1;
-  // float u = 0.1;
-  // float v = 0.8;
-  // ray cast_ray = cam.get_ray(u,v);
-  // color pixel;
-  // pixel = shade(cast_ray,spheres);
   //Render Details
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {
@@ -61,8 +55,6 @@ int main() {
             float u = (float(i) + random_float())/image_width;
             float v = (float(j) + random_float())/image_height;
             ray cast_ray = cam.get_ray(u,v);
-            // vec dir = cast_ray.direction;
-            // dir.print();
             pixel = pixel + shade(cast_ray,spheres);
           }
         output_color(pixel,samples);
