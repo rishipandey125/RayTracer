@@ -19,7 +19,6 @@ color shade(ray &casted_ray, std::vector <sphere> &objects) {
         closest = t;
         pixel = objects[i].sphere_color;
       }
-      //if this hit is closer than the previous, update the color
     }
   }
   return pixel;
