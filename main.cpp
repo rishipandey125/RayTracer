@@ -15,8 +15,12 @@ if that hits something, take some of that color and add it to the existing collo
 Keep doing this until you stop hitting stuff or you reach the ray depth
 We are using global illumination (so there is no local light source the sky is essentially the light source)
 */
-color trace(ray &casted_ray, std::vector <sphere> &objects, int depth) {
-  color pixel(1,1,1);
+color trace(ray &casted_ray, std::vector <sphere> &objects) {
+  //create gradient background
+  vec unit_direction = casted_ray.direction;
+  unit_direction.unit();
+  float val = unit_direction.y;
+  color pixel = color(1.0, 1.0, 1.0)*(1-val) + color(0.5, 0.7, 1.0)*val;
   float closest = float(RAND_MAX); //closest t (whatever is closest to camera is what you render)
   for (int i = 0; i < objects.size(); i++) {
     float t = objects[i].hit_sphere(casted_ray);
@@ -24,7 +28,7 @@ color trace(ray &casted_ray, std::vector <sphere> &objects, int depth) {
       //hit
       if (t < closest) {
         closest = t;
-        pixel = objects[i].sphere_color; //this is where we would do a recursive call
+        pixel = color(1,0,0); //this is where we would do a recursive call
       }
     }
   }
@@ -47,8 +51,8 @@ void output_color(color &pixel, int samples) {
 
 int main() {
   camera cam;
-  sphere world_sphere(point(0,-50.5,-1),50,color(0,1,0));
-  sphere first_sphere(point(0.0,0.0,-1),0.5,color(1,0,0));
+  sphere world_sphere(point(0,-50.5,-1),50);
+  sphere first_sphere(point(0.0,0.0,-1),0.5);
   std::vector <sphere> spheres = {world_sphere,first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
