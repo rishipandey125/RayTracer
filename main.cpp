@@ -19,7 +19,7 @@ color trace(ray &casted_ray, std::vector <sphere> &objects) {
   //create gradient background
   vec unit_direction = casted_ray.direction;
   unit_direction.unit();
-  float val = unit_direction.y;
+  float val = (unit_direction.y+1.0)/2.0;
   color pixel = color(1.0, 1.0, 1.0)*(1-val) + color(0.5, 0.7, 1.0)*val;
   float closest = float(RAND_MAX); //closest t (whatever is closest to camera is what you render)
   for (int i = 0; i < objects.size(); i++) {
