@@ -24,19 +24,17 @@ We are using global illumination (so there is no local light source the sky is e
 
 struct hit {
   bool success;
-  float t;
+  point hit_point;
   sphere object;
   hit() {
-    bool = false;
-    t = 0.0;
-    object = NULL;
+    success = false;
   }
-  hit(bool s, float val, sphere sp) {
+  hit(bool s, point p, sphere sp) {
     success = s;
-    t = s;
+    hit_point = p;
     object = sp;
   }
-}
+};
 
 float random_float() {
   return ((float) rand()/RAND_MAX);
@@ -53,33 +51,31 @@ vec random_unit_vector() {
   return vec(r*cos(a),r*sin(a),z);
 }
 
-color trace(ray &casted_ray, std::vector <sphere> &objects, int depth) {
-  //create gradient background
+color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
   if (depth <= 0) {
     return color(0,0,0);
   }
-  vec unit_direction = casted_ray.direction;
-  unit_direction.unit();
-  float val = (unit_direction.y+1.0)/2.0;
-  color pixel = color(1.0, 1.0, 1.0)*(1-val) + color(0.5, 0.7, 1.0)*val;
-  float closest = float(RAND_MAX); //closest t (whatever is closest to camera is what you render)
-  //save which object is hit basically by return the sphere, point, and normal vec?
-  //create a separate hit func? or hit structure
-
-  //create a hit object (after iterating through all objects we have the nearest hit if there is one)
+  float closest = float(RAND_MAX);
+  hit record;
   for (int i = 0; i < objects.size(); i++) {
     float t = objects[i].hit_sphere(casted_ray);
     if (t > 0.0) {
       if (t < closest) {
-
         closest = t;
-        pixel = color(1,0,0); //this is where we would do a recursive call
+        point hit_point = casted_ray.get_point_at(t);
+        record = hit(true,hit_point,objects[i]);
       }
     }
   }
-  // if () we hit something 
-  //if you did hit something, retrace from that point and normal vec
-  return pixel;
+  if (record.success) {
+    point target = record.hit_point + record.object.get_normal_vector(record.hit_point) + random_unit_vector();
+    return trace(ray(record.hit_point,target-record.hit_point),objects,depth-1)*0.5;
+    //recursive ray call
+  }
+  vec unit_direction = casted_ray.direction;
+  unit_direction.unit();
+  float val = (unit_direction.y+1.0)/2.0;
+  return color(1.0, 1.0, 1.0)*(1-val) + color(0.5, 0.7, 1.0)*val;
 }
 
 
@@ -100,7 +96,7 @@ int main() {
   std::vector <sphere> spheres = {world_sphere,first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 1;
+  int samples = 100;
   //Render Details
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {
