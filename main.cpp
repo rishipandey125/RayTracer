@@ -7,7 +7,11 @@
 #include "sphere.cpp"
 #include "camera.cpp"
 
+/*
+Diffuse Notes:
+Diffuse lighting comes from multiple bounces and collects light from the objects around it.
 
+*/
 color shade(ray &casted_ray, std::vector <sphere> &objects) {
   color pixel(1,1,1);
   float closest = float(RAND_MAX); //closest t (whatever is closest to camera is what you render)
