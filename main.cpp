@@ -11,10 +11,31 @@
 Diffuse Notes:
 Diffuse lighting comes from multiple bounces and collects light from the objects around it.
 If you hit an object, create another ray in a random direction,
-if that hits something, take some of that color and add it to the existing collor.
+Random direction: your current point is p
+normal vector of the sphere at point p is n
+point s is a random point in the unit sphere
+your target is
+your new ray created has an origin of point p and a direction of target-p
+if that hits something you keep diluting the end color (global illumination)
+
 Keep doing this until you stop hitting stuff or you reach the ray depth
 We are using global illumination (so there is no local light source the sky is essentially the light source)
 */
+float random_float() {
+  return ((float) rand()/RAND_MAX);
+}
+
+float random_float(float min, float max) {
+  return min + ((max-min)*random_float());
+}
+
+vec random_unit_vector() {
+  float a = random_float(0.0,2.0*M_PI);
+  float z = random_float(-1.0,1.0);
+  float r = sqrt(1-(z*z));
+  return vec(r*cos(a),r*sin(a),z);
+}
+
 color trace(ray &casted_ray, std::vector <sphere> &objects) {
   //create gradient background
   vec unit_direction = casted_ray.direction;
@@ -35,9 +56,6 @@ color trace(ray &casted_ray, std::vector <sphere> &objects) {
   return pixel;
 }
 
-float random_float() {
-  return (float) rand()/RAND_MAX;
-}
 
 void output_color(color &pixel, int samples) {
   float ratio = 1.0/float(samples);
