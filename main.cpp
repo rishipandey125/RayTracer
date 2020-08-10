@@ -10,9 +10,11 @@
 /*
 Diffuse Notes:
 Diffuse lighting comes from multiple bounces and collects light from the objects around it.
-
+If you hit an object, create another ray in a random direction,
+if that hits something, take some of that color and add it to the existing collor.
+Keep doing this until you stop hitting stuff or you reach the ray depth
 */
-color shade(ray &casted_ray, std::vector <sphere> &objects) {
+color trace(ray &casted_ray, std::vector <sphere> &objects) {
   color pixel(1,1,1);
   float closest = float(RAND_MAX); //closest t (whatever is closest to camera is what you render)
   for (int i = 0; i < objects.size(); i++) {
@@ -21,7 +23,7 @@ color shade(ray &casted_ray, std::vector <sphere> &objects) {
       //hit
       if (t < closest) {
         closest = t;
-        pixel = objects[i].sphere_color;
+        pixel = objects[i].sphere_color; //this is where we would do a recursive call
       }
     }
   }
@@ -59,7 +61,7 @@ int main() {
             float u = (float(i) + random_float())/image_width;
             float v = (float(j) + random_float())/image_height;
             ray cast_ray = cam.get_ray(u,v);
-            pixel = pixel + shade(cast_ray,spheres);
+            pixel = pixel + trace(cast_ray,spheres);
           }
         output_color(pixel,samples);
       }
