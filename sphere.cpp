@@ -2,10 +2,9 @@
 
 sphere::sphere() {}
 
-sphere::sphere(point sphere_center, float sphere_rad, color pixel) {
+sphere::sphere(point sphere_center, float sphere_rad) {
   this->center = sphere_center;
   this->radius = sphere_rad;
-  this->sphere_color = pixel;
 }
 
 //problem with ground sphere must be here

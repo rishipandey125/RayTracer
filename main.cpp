@@ -13,8 +13,9 @@ Diffuse lighting comes from multiple bounces and collects light from the objects
 If you hit an object, create another ray in a random direction,
 if that hits something, take some of that color and add it to the existing collor.
 Keep doing this until you stop hitting stuff or you reach the ray depth
+We are using global illumination (so there is no local light source the sky is essentially the light source)
 */
-color trace(ray &casted_ray, std::vector <sphere> &objects) {
+color trace(ray &casted_ray, std::vector <sphere> &objects, int depth) {
   color pixel(1,1,1);
   float closest = float(RAND_MAX); //closest t (whatever is closest to camera is what you render)
   for (int i = 0; i < objects.size(); i++) {
