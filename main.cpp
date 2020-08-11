@@ -67,7 +67,7 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
     //randomized target
     point target = record.hit_point + record.object.get_normal_vector(record.hit_point) + random_unit_vector();
     //recursive ray call
-    return trace(ray(record.hit_point,target-record.hit_point),objects,depth-1)*0.5;
+    return trace(ray(record.hit_point,target-record.hit_point),objects,depth-1)*record.object.sphere_color;
   }
   //gradient sky (global illumination)
   vec unit_direction = casted_ray.direction;
