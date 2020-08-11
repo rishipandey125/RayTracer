@@ -91,7 +91,7 @@ void output_color(color &pixel, int samples) {
 
 int main() {
   camera cam;
-  sphere world_sphere(point(0,-50.5,-1),50,color(0,0,0));
+  sphere world_sphere(point(0,-50.5,-1),50,color(1.0,1.0,1.0));
   sphere first_sphere(point(0.0,0.0,-1),0.5,color(0.7,0.3,0.3));
   std::vector <sphere> spheres = {world_sphere,first_sphere};
   int image_width = 1000;
