@@ -1,6 +1,7 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 #include "vec.h"
+//Sphere Class Header
 class sphere {
   public:
     sphere();

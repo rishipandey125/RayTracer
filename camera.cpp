@@ -1,5 +1,7 @@
 #include "camera.h"
+//Camera Class
 
+//Default Constructor
 camera::camera() {
   this->origin = point(0.0,0.0,0.0);
   this->aspect_ratio = 16.0/9.0;
@@ -8,6 +10,7 @@ camera::camera() {
   this->focal_length = 1.0;
 }
 
+//Specific Constructor
 camera::camera(point camera_origin, float camera_aspect_ratio,
       float camera_viewport_height, float camera_focal_length) {
   this->origin = camera_origin;
@@ -17,8 +20,7 @@ camera::camera(point camera_origin, float camera_aspect_ratio,
   this->focal_length = camera_focal_length;
 }
 
-
-//get ray is not the issue with the ground sphere at the top
+//Generate Ray Based Off of UV Frame Location
 ray camera::get_ray(float &u, float &v) {
   float viewport_x = (u*this->viewport_width)-(this->viewport_width/2);
   float viewport_y = -1.0*((this->viewport_height/2)-(v*this->viewport_height));

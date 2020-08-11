@@ -3,6 +3,7 @@
 #include "vec.h"
 #include "ray.h"
 
+//Camera Class Header
 class camera {
   public:
     camera();
