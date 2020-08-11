@@ -80,6 +80,8 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
 void output_color(color &pixel, int samples) {
   float ratio = 1.0/float(samples);
   color output_pixel = pixel*ratio;
+  //Gamma Correction gamma=2.0
+  output_pixel.root();
   output_pixel.clamp();
   int r = static_cast<int>(255 * output_pixel.x);
   int g = static_cast<int>(255 * output_pixel.y);
@@ -94,7 +96,7 @@ int main() {
   std::vector <sphere> spheres = {world_sphere,first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 1;
+  int samples = 100;
 
   //Render Details (Iterate and Create Image)
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";

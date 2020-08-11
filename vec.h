@@ -14,6 +14,7 @@ class vec {
     vec operator*(const vec &vector);
     vec operator*(const float &scalar);
     void clamp();
+    void root();
     void print();
     float x,y,z;
 

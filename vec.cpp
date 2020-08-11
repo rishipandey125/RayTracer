@@ -73,6 +73,13 @@ void vec::clamp() {
   }
 }
 
+//Square Root of Each term in a Vec
+void vec::root() {
+  this->x = sqrt(this->x);
+  this->y = sqrt(this->y);
+  this->z = sqrt(this->z);
+}
+
 //Ease of Access Print Vector Function
 void vec::print() {
   std::cout << "<" <<  this->x << "," << this->y << "," << this->z << ">" << std::endl;
