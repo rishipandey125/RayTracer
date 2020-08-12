@@ -64,6 +64,7 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
       }
     }
   }
+  //CREATE MATERIAL CLASS BEFORE TESTING
   if (record.success) {
     //reflected ray metal
     vec v = casted_ray.direction;
