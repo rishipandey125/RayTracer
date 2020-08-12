@@ -46,6 +46,7 @@ Traces Ray through the Scene
 @param casted_ray: ray casted from camera through viewport
 @param objects: data structure of all spheres in the scene
 @param depth: number of bounces for ray tracing
+//reflect vector (v_in - (2 * dot(v_in,normal) * normal))
 */
 color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
   if (depth <= 0) {
@@ -64,10 +65,19 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
     }
   }
   if (record.success) {
-    //randomized target
-    point target = record.hit_point + record.object.get_normal_vector(record.hit_point) + random_unit_vector();
+    //reflected ray metal
+    vec v = casted_ray.direction;
+    vec n = record.object.get_normal_vector(record.hit_point);
+    float product  = v.dot(n)*2.0;
+    vec reflect = v - (n*product);
+
+    //randomized target diffuse
+    // point target = record.hit_point + record.object.get_normal_vector(record.hit_point) + random_unit_vector();
     //recursive ray call
-    return trace(ray(record.hit_point,target-record.hit_point),objects,depth-1)*record.object.sphere_color;
+    if (reflect.dot(n) > 0)
+      return trace(ray(record.hit_point,reflect),objects,depth-1)*record.object.sphere_color;
+
+    // return trace(ray(record.hit_point,target-record.hit_point),objects,depth-1)*record.object.sphere_color;
   }
   //gradient sky (global illumination)
   vec unit_direction = casted_ray.direction;
@@ -92,7 +102,7 @@ void output_color(color &pixel, int samples) {
 int main() {
   camera cam;
   sphere world_sphere(point(0,-100.5,-1),100,color(.2,.2,.2));
-  sphere first_sphere(point(0.0,0.0,-1),0.5,color(0.7,0.3,0.3));
+  sphere first_sphere(point(0.3,0.0,-1),0.5,color(0.7,0.3,0.3));
   std::vector <sphere> spheres = {world_sphere,first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
