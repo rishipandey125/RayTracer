@@ -102,11 +102,11 @@ void output_color(color &pixel, int samples) {
 int main() {
   camera cam;
   sphere world_sphere(point(0,-100.5,-1),100,color(.2,.2,.2));
-  sphere first_sphere(point(0.3,0.0,-1),0.5,color(0.7,0.3,0.3));
+  sphere first_sphere(point(0.0,0.0,-1),0.5,color(0.7,0.3,0.3));
   std::vector <sphere> spheres = {world_sphere,first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 100;
+  int samples = 1;
 
   //Render Details (Iterate and Create Image)
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
