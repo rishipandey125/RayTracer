@@ -6,22 +6,7 @@
 #include "ray.cpp"
 #include "sphere.cpp"
 #include "camera.cpp"
-
-
-// Structure for When a Ray Hits an Object
-struct hit {
-  bool success;
-  point hit_point;
-  sphere object;
-  hit() {
-    success = false;
-  }
-  hit(bool s, point p, sphere sp) {
-    success = s;
-    hit_point = p;
-    object = sp;
-  }
-};
+#include "hit.h"
 
 //Generates Random Float between 0 and 1
 float random_float() {
@@ -66,17 +51,20 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
   }
   //CREATE MATERIAL CLASS BEFORE TESTING
   if (record.success) {
+    ray next_ray = record.object.sphere_material.scatter(record,);
+    return trace(next_ray,objects,depth-1)*record.object.sphere_material.base_color;
     //reflected ray metal
-    vec v = casted_ray.direction;
-    vec n = record.object.get_normal_vector(record.hit_point);
-    float product  = v.dot(n)*2.0;
-    vec reflect = v - (n*product);
+    // vec v = casted_ray.direction;
+    // vec n = record.object.get_normal_vector(record.hit_point);
+    // float product  = v.dot(n)*2.0;
+    // vec reflect = v - (n*product);
+
 
     //randomized target diffuse
-    // point target = record.hit_point + record.object.get_normal_vector(record.hit_point) + random_unit_vector();
+      // point target = record.hit_point + record.object.get_normal_vector(record.hit_point) + random_unit_vector();
     //recursive ray call
-    if (reflect.dot(n) > 0)
-      return trace(ray(record.hit_point,reflect),objects,depth-1)*record.object.sphere_color;
+    // if (reflect.dot(n) > 0)
+      // return trace(ray(record.hit_point,reflect),objects,depth-1)*record.object.sphere_color;
 
     // return trace(ray(record.hit_point,target-record.hit_point),objects,depth-1)*record.object.sphere_color;
   }
@@ -102,8 +90,8 @@ void output_color(color &pixel, int samples) {
 
 int main() {
   camera cam;
-  sphere world_sphere(point(0,-100.5,-1),100,color(.2,.2,.2));
-  sphere first_sphere(point(0.0,0.0,-1),0.5,color(0.7,0.3,0.3));
+  sphere world_sphere(point(0,-100.5,-1),100,diffuse(color(.2,.2,.2)));
+  sphere first_sphere(point(0.0,0.0,-1),0.5,diffuse(color(0.7,0.3,0.3)));
   std::vector <sphere> spheres = {world_sphere,first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
