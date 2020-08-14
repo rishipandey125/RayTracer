@@ -46,7 +46,9 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
       if (t < closest) {
         closest = t;
         point hit_point = casted_ray.get_point_at(t);
-        record = hit(true,hit_point,objects[i]);
+        record.success = true;
+        record.hit_point = hit_point;
+        record.object = objects[i];
       }
     }
   }
