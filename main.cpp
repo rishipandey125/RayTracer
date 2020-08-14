@@ -7,6 +7,7 @@
 #include "sphere.cpp"
 #include "camera.cpp"
 #include "hit.h"
+#include "diffuse.cpp"
 
 //Generates Random Float between 0 and 1
 float random_float() {
@@ -51,7 +52,7 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
   }
   //CREATE MATERIAL CLASS BEFORE TESTING
   if (record.success) {
-    ray next_ray = record.object.sphere_material.scatter(record,);
+    ray next_ray = record.object.sphere_material.scatter(record);
     return trace(next_ray,objects,depth-1)*record.object.sphere_material.base_color;
     //reflected ray metal
     // vec v = casted_ray.direction;

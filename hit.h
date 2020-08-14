@@ -1,3 +1,7 @@
+#ifndef HIT_H
+#define HIT_H
+#include "sphere.h"
+#include "vec.h"
 // Structure for When a Ray Hits an Object
 struct hit {
   bool success;
@@ -12,3 +16,4 @@ struct hit {
     object = sp;
   }
 };
+#endif

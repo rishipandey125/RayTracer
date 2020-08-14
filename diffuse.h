@@ -7,9 +7,9 @@
 
 class diffuse : public material {
   public:
-    diffuse(color b_color); 
+    diffuse(color b_color);
     color base_color;
-    ray scatter(hit record,vec rand_unit_vec);
+    ray scatter(hit &record);
 };
 
 #endif
