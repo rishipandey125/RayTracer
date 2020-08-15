@@ -6,7 +6,7 @@
 #include "ray.cpp"
 #include "sphere.cpp"
 #include "camera.cpp"
-#include "diffuse.cpp"
+#include "material.h"
 #include "hit.h"
 
 //Generates Random Float between 0 and 1
