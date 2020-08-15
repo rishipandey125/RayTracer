@@ -1,8 +1,8 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
-#include "hit.h"
 #include "ray.h"
 #include "vec.h"
+#include "hit.h"
 
 class material {
   public:
