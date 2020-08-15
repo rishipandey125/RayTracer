@@ -47,13 +47,14 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
         closest = t;
         point hit_point = casted_ray.get_point_at(t);
         record.success = true;
-        record.hit_point = &hit_point;
+        record.hit_point = hit_point;
         record.object = &objects[i];
       }
     }
   }
   //CREATE MATERIAL CLASS BEFORE TESTING
   if (record.success) {
+    record.random_unit_vec = random_unit_vector();
     ray next_ray = record.object->sphere_material.scatter(record);
     return trace(next_ray,objects,depth-1)*record.object->sphere_material.base_color;
     //reflected ray metal

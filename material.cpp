@@ -1,6 +1,8 @@
 #include "material.h"
 
-material::material() {}
+material::material() {
+  base_color = color(0,0,0);
+}
 
 material::material(color b_color) {
   base_color = b_color;
