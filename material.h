@@ -1,9 +1,9 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
-#include "sphere.h"
 #include "ray.h"
 #include "vec.h"
 #include "hit.h"
+class sphere;
 
 class material {
   public:

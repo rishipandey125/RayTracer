@@ -2,6 +2,7 @@
 #define SPHERE_H
 #include "vec.h"
 #include "material.h"
+
 //Sphere Class Header
 class sphere {
   public:

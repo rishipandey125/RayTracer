@@ -56,6 +56,7 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
   if (record.success) {
     record.random_unit_vec = random_unit_vector();
     ray next_ray = record.object->sphere_material.scatter(record);
+    //pass in the hit record, and from there modify it in the scatter function
     return trace(next_ray,objects,depth-1)*record.object->sphere_material.base_color;
     //reflected ray metal
     // vec v = casted_ray.direction;
@@ -72,6 +73,7 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
 
     // return trace(ray(record.hit_point,target-record.hit_point),objects,depth-1)*record.object.sphere_color;
   }
+
   //gradient sky (global illumination)
   vec unit_direction = casted_ray.direction;
   unit_direction.unit();
