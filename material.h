@@ -3,10 +3,10 @@
 #include "ray.h"
 #include "vec.h"
 #include "hit.h"
-class sphere;
-
+#include "sphere.h"
 class material {
   public:
+    material();
     //virtual keyword: means it was declared in the base class and can be redefined in child classes (override)
     virtual ray scatter(hit &record);
 };
