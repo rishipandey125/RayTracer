@@ -99,8 +99,6 @@ void output_color(color &pixel, int samples) {
 
 int main() {
   camera cam;
-  // diffuse world_sphere_mat(color(.2,.2,.2));
-  // diffuse first_sphere_mat(color(1,0,0));
   sphere world_sphere(point(0,-100.5,-1),100,diffuse(color(0.2,0.2,0.2)));
   sphere first_sphere(point(0.0,0.0,-1),0.5,diffuse(color(1,0.0,0.0)));
   std::vector <sphere> spheres = {world_sphere,first_sphere};

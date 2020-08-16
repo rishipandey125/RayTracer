@@ -8,10 +8,7 @@ class material {
   public:
     color base_color;
     material() {}
-    // material(color b_color) {
-    //   std::cout << "Material Constructor Called" << std::endl;
-    //   base_color = b_color;
-    // }
+
     //virtual keyword: means it was declared in the base class and can be redefined in child classes (override)
     virtual ray scatter(hit &record) {
       std::cout << "Material Scatter Func Called" << std::endl;
@@ -24,7 +21,7 @@ class diffuse: public material {
     diffuse(color b_color) {
       base_color = b_color;
     }
-    virtual ray scatter(hit &record) override{
+    virtual ray scatter(hit &record) {
       std::cout << "Diffuse Scatter Func Called" << std::endl;
       point h_point = record.hit_point;
       point target = h_point + record.object_normal + record.random_unit_vec;
