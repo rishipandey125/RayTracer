@@ -95,8 +95,8 @@ void output_color(color &pixel, int samples) {
 
 int main() {
   camera cam;
-  material world_sphere_mat(color(.2,.2,.2));
-  material first_sphere_mat(color(1,0,0));s
+  diffuse world_sphere_mat(color(.2,.2,.2));
+  diffuse first_sphere_mat(color(1,0,0));
   sphere world_sphere(point(0,-100.5,-1),100,world_sphere_mat);
   sphere first_sphere(point(0.0,0.0,-1),0.5,first_sphere_mat);
   std::vector <sphere> spheres = {world_sphere,first_sphere};
