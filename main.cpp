@@ -101,15 +101,15 @@ int main() {
   camera cam;
   // diffuse world_sphere_mat(color(.2,.2,.2));
   // diffuse first_sphere_mat(color(1,0,0));
-  sphere world_sphere(point(0,-100.5,-1),100,material(color(0.2,0.2,0.2)));
-  sphere first_sphere(point(0.0,0.0,-1),0.5,material(color(1,0.0,0.0)));
+  sphere world_sphere(point(0,-100.5,-1),100,diffuse(color(0.2,0.2,0.2)));
+  sphere first_sphere(point(0.0,0.0,-1),0.5,diffuse(color(1,0.0,0.0)));
   std::vector <sphere> spheres = {world_sphere,first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
   int samples = 1;
 
   //Render Details (Iterate and Create Image)
-  std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+  // std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {
       for (int i = 0; i < image_width; i++) {
           color pixel;
@@ -120,7 +120,7 @@ int main() {
             ray cast_ray = cam.get_ray(u,v);
             pixel = pixel + trace(cast_ray,spheres,50);
           }
-        output_color(pixel,samples);
+        // output_color(pixel,samples);
       }
   }
   return 0;
