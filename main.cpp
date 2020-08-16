@@ -58,8 +58,8 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
     record.random_unit_vec = random_unit_vector();
     record.object_normal = record.object->get_normal_vector(record.hit_point);
     // ray next_ray = record.object.sphere_material.scatter(record);
-    ray next_ray = record.object->sphere_material.scatter(record);
-    return trace(next_ray,objects,depth-1)*record.object->sphere_material.base_color;
+    ray next_ray = record.object->sphere_material->scatter(record);
+    return trace(next_ray,objects,depth-1)*record.object->sphere_material->base_color;
 
     //reflected ray metal
     // vec v = casted_ray.direction;
@@ -101,15 +101,16 @@ void output_color(color &pixel, int samples) {
 //using pointers in the sphere class with the materials MAY be the solution to this.
 int main() {
   camera cam;
-  sphere world_sphere(point(0,-100.5,-1),100,diffuse(color(0.2,0.2,0.2)));
-  sphere first_sphere(point(0.0,0.0,-1),0.5,diffuse(color(1,0.0,0.0)));
+  diffuse world_mat(color(0.2,0.2,0.2));
+  diffuse first_mat(color(1,0.0,0.0));
+  sphere world_sphere(point(0,-100.5,-1),100,&world_mat);
+  sphere first_sphere(point(0.0,0.0,-1),0.5,&first_mat);
   std::vector <sphere> spheres = {world_sphere,first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
   int samples = 1;
-  // world_sphere.sphere_material.print_something();
   //Render Details (Iterate and Create Image)
-  // std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+  std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {
       for (int i = 0; i < image_width; i++) {
           color pixel;
@@ -120,7 +121,7 @@ int main() {
             ray cast_ray = cam.get_ray(u,v);
             pixel = pixel + trace(cast_ray,spheres,50);
           }
-        // output_color(pixel,samples);
+        output_color(pixel,samples);
       }
   }
   return 0;

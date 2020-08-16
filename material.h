@@ -10,7 +10,7 @@ class material {
     material() {}
 
     //virtual keyword: means it was declared in the base class and can be redefined in child classes (override)
-    ray scatter(hit &record) {
+    virtual ray scatter(hit &record) {
       // std::cout << "Material Scatter Func Called" << std::endl;
       return ray(record.hit_point,record.hit_point);
     }
@@ -25,14 +25,14 @@ class diffuse: public material {
     diffuse(color b_color) {
       base_color = b_color;
     }
-    ray scatter(hit &record) {
-      std::cout << "Diffuse Scatter Func Called" << std::endl;
+    virtual ray scatter(hit &record) {
+      // std::cout << "Diffuse Scatter Func Called" << std::endl;
       point h_point = record.hit_point;
       point target = h_point + record.object_normal + record.random_unit_vec;
       return ray(h_point,target-h_point);
     }
 
-    void print_something() {
+    virtual void print_something() {
       std::cout << "hello from diffuse" << std::endl;
     }
 };
