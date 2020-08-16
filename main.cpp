@@ -57,6 +57,7 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
   if (record.success) {
     record.random_unit_vec = random_unit_vector();
     record.object_normal = record.object->get_normal_vector(record.hit_point);
+      
     // ray next_ray = record.object.sphere_material.scatter(record);
     ray next_ray = record.object->sphere_material->scatter(record);
     return trace(next_ray,objects,depth-1)*record.object->sphere_material->base_color;
