@@ -6,6 +6,7 @@
 #include "ray.cpp"
 #include "sphere.cpp"
 #include "camera.cpp"
+//reimplement materials class
 // #include "material.h"
 #include "hit.h"
 
