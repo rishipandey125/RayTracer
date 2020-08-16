@@ -67,9 +67,6 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
     // float product  = v.dot(n)*2.0;
     // vec reflect = v - (n*product);
 
-
-    //randomized target diffuse
-      // point target = record.hit_point + record.object.get_normal_vector(record.hit_point) + random_unit_vector();
     //recursive ray call
     // if (reflect.dot(n) > 0)
       // return trace(ray(record.hit_point,reflect),objects,depth-1)*record.object.sphere_color;
@@ -97,15 +94,16 @@ void output_color(color &pixel, int samples) {
   std::cout << r << ' ' << g << ' ' << b << '\n';
 }
 
-//the issue is when you cast a material to the sphere it casts up to the parent class
-//using pointers in the sphere class with the materials MAY be the solution to this.
+//clean/document materials implementation
 int main() {
   camera cam;
+
   diffuse world_mat(color(0.2,0.2,0.2));
   diffuse first_mat(color(1,0.0,0.0));
   sphere world_sphere(point(0,-100.5,-1),100,&world_mat);
   sphere first_sphere(point(0.0,0.0,-1),0.5,&first_mat);
   std::vector <sphere> spheres = {world_sphere,first_sphere};
+
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
   int samples = 1;
