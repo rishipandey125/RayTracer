@@ -48,15 +48,15 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
         point hit_point = casted_ray.get_point_at(t);
         record.success = true;
         record.hit_point = hit_point;
-        record.object = &objects[i];
+        record.object = objects[i];
       }
     }
   }
   //CREATE MATERIAL CLASS BEFORE TESTING
   if (record.success) {
     record.random_unit_vec = random_unit_vector();
-    ray next_ray = record.object->sphere_material.scatter(record);
-    return trace(next_ray,objects,depth-1)*record.object->sphere_material.base_color;
+    ray next_ray = record.object.sphere_material->scatter(record);
+    return trace(next_ray,objects,depth-1)*record.object.sphere_material->base_color;
     //reflected ray metal
     // vec v = casted_ray.direction;
     // vec n = record.object.get_normal_vector(record.hit_point);
@@ -95,8 +95,10 @@ void output_color(color &pixel, int samples) {
 
 int main() {
   camera cam;
-  sphere world_sphere(point(0,-100.5,-1),100,diffuse(color(.2,.2,.2)));
-  sphere first_sphere(point(0.0,0.0,-1),0.5,diffuse(color(0.7,0.3,0.3)));
+  diffuse world_sphere_mat = diffuse(color(.2,.2,.2));
+  diffuse first_sphere_mat = diffuse(color(1,0,0));
+  sphere world_sphere(point(0,-100.5,-1),100,&world_sphere_mat);
+  sphere first_sphere(point(0.0,0.0,-1),0.5,&first_sphere_mat);
   std::vector <sphere> spheres = {world_sphere,first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
