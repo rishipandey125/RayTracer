@@ -9,7 +9,7 @@ struct hit {
   bool success = false;
   point hit_point;
   sphere *object;
-  vec sphere_normal;
+  vec object_nromal;
   vec random_unit_vec;
 };
 #endif
