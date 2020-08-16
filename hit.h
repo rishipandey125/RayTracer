@@ -1,13 +1,14 @@
 #ifndef HIT_H
 #define HIT_H
 #include "vec.h"
-#include "sphere.h"
+// #include "sphere.h"
+class sphere;
 
 // Structure for When a Ray Hits an Object
 struct hit {
-  bool success;
+  bool success = false;
   point hit_point;
-  sphere object;
+  sphere *object;
   vec random_unit_vec;
 };
 #endif

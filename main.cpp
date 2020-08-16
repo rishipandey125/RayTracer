@@ -7,7 +7,7 @@
 #include "sphere.cpp"
 #include "camera.cpp"
 //reimplement materials class
-// #include "material.h"
+#include "material.h"
 #include "hit.h"
 
 //Generates Random Float between 0 and 1
@@ -49,7 +49,7 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
         point hit_point = casted_ray.get_point_at(t);
         record.success = true;
         record.hit_point = hit_point;
-        record.object = objects[i];
+        record.object = &objects[i];
       }
     }
   }
@@ -58,7 +58,7 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
     record.random_unit_vec = random_unit_vector();
     // ray next_ray = record.object.sphere_material.scatter(record);
     point h_point = record.hit_point;
-    point target = h_point + record.object.get_normal_vector(h_point) + record.random_unit_vec;
+    point target = h_point + record.object->get_normal_vector(h_point) + record.random_unit_vec;
     ray next_ray(h_point,target-h_point);
     return trace(next_ray,objects,depth-1)*color(1,0,0);
 
