@@ -6,7 +6,7 @@
 #include "ray.cpp"
 #include "sphere.cpp"
 #include "camera.cpp"
-#include "material.h"
+// #include "material.h"
 #include "hit.h"
 
 //Generates Random Float between 0 and 1
@@ -55,8 +55,12 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
   //CREATE MATERIAL CLASS BEFORE TESTING
   if (record.success) {
     record.random_unit_vec = random_unit_vector();
-    ray next_ray = record.object.sphere_material.scatter(record);
-    return trace(next_ray,objects,depth-1)*record.object.sphere_material.base_color;
+    // ray next_ray = record.object.sphere_material.scatter(record);
+    point h_point = record.hit_point;
+    point target = h_point + record.object.get_normal_vector(h_point) + record.random_unit_vec;
+    ray next_ray(h_point,target-h_point);
+    return trace(next_ray,objects,depth-1)*color(1,0,0);
+
     //reflected ray metal
     // vec v = casted_ray.direction;
     // vec n = record.object.get_normal_vector(record.hit_point);
@@ -95,10 +99,10 @@ void output_color(color &pixel, int samples) {
 
 int main() {
   camera cam;
-  diffuse world_sphere_mat(color(.2,.2,.2));
-  diffuse first_sphere_mat(color(1,0,0));
-  sphere world_sphere(point(0,-100.5,-1),100,world_sphere_mat);
-  sphere first_sphere(point(0.0,0.0,-1),0.5,first_sphere_mat);
+  // diffuse world_sphere_mat(color(.2,.2,.2));
+  // diffuse first_sphere_mat(color(1,0,0));
+  sphere world_sphere(point(0,-100.5,-1),100);
+  sphere first_sphere(point(0.0,0.0,-1),0.5);
   std::vector <sphere> spheres = {world_sphere,first_sphere};
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
