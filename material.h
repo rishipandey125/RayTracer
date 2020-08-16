@@ -8,12 +8,16 @@ class material {
   public:
     color base_color;
     material() {}
+    material(color b_color) {
+      base_color = b_color;
+    }
     //virtual keyword: means it was declared in the base class and can be redefined in child classes (override)
     // virtual ray scatter(hit record) {};
     virtual ray scatter(hit record) {
       point h_point = record.hit_point;
-        point target = h_point + record.object_normal + record.random_unit_vec;
-      return ray(h_point,target-h_point);
+      point target = h_point + record.object_normal + record.random_unit_vec;
+      ray next_ray(h_point,target-h_point);
+      return next_ray;
     }
 };
 //

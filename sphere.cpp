@@ -5,9 +5,10 @@
 sphere::sphere() {}
 
 //Specific Constructor
-sphere::sphere(point sphere_center, float sphere_rad) {
+sphere::sphere(point sphere_center, float sphere_rad, material mat) {
   this->center = sphere_center;
   this->radius = sphere_rad;
+  this->sphere_material = mat;
 }
 
 /*
