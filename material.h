@@ -32,7 +32,11 @@ class metal: public material {
       base_color = b_color;
     }
     virtual ray scatter(hit &record) {
-      
+      vec v = record.casted_ray_direction;
+      vec n = record.object_normal;
+      float product  = v.dot(n)*2.0;
+      vec reflect = v - (n*product);
+      return ray(record.hit_point,reflect-record.hit_point);
     }
 };
 #endif
