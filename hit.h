@@ -1,6 +1,7 @@
 #ifndef HIT_H
 #define HIT_H
 #include "vec.h"
+#include "ray.h"
 //forward decleration because sphere references material, and material references hit, so hit cant ref sphere
 class sphere;
 
@@ -12,5 +13,6 @@ struct hit {
   vec casted_ray_direction;
   vec object_normal;
   vec random_unit_vec;
+  ray next_ray;
 };
 #endif

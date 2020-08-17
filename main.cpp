@@ -53,26 +53,16 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
       }
     }
   }
-  //CREATE MATERIAL CLASS BEFORE TESTING
+
   if (record.success) {
     record.random_unit_vec = random_unit_vector();
     record.object_normal = record.object->get_normal_vector(record.hit_point);
     record.casted_ray_direction = casted_ray.direction;
-    // ray next_ray = record.object.sphere_material.scatter(record);
-    ray next_ray = record.object->sphere_material->scatter(record);
-    return trace(next_ray,objects,depth-1)*record.object->sphere_material->base_color;
-
-    //reflected ray metal
-    // vec v = casted_ray.direction;
-    // vec n = record.object.get_normal_vector(record.hit_point);
-    // float product  = v.dot(n)*2.0;
-    // vec reflect = v - (n*product);
-
-    //recursive ray call
-    // if (reflect.dot(n) > 0)
-      // return trace(ray(record.hit_point,reflect),objects,depth-1)*record.object.sphere_color;
-
-    // return trace(ray(record.hit_point,target-record.hit_point),objects,depth-1)*record.object.sphere_color;
+    if (record.object->sphere_material->scatter(record)) {
+      return trace(record.next_ray,objects,depth-1)*record.object->sphere_material->base_color;
+    } else {
+      return color(0,0,0);
+    }
   }
 
   //gradient sky (global illumination)
@@ -100,7 +90,7 @@ int main() {
   camera cam;
 
   diffuse world_mat(color(0.2,0.2,0.2));
-  metal first_mat(color(1,0.0,0.0));
+  diffuse first_mat(color(1,0.0,0.0));
   sphere world_sphere(point(0,-100.5,-1),100,&world_mat);
   sphere first_sphere(point(0.0,0.0,-1),0.5,&first_mat);
   std::vector <sphere> spheres = {world_sphere,first_sphere};
