@@ -90,14 +90,14 @@ int main() {
   camera cam;
 
   diffuse world_mat(color(0.2,0.2,0.2));
-  diffuse first_mat(color(1,0.0,0.0));
+  metal first_mat(color(0.8,0.8,0.8));
   sphere world_sphere(point(0,-100.5,-1),100,&world_mat);
   sphere first_sphere(point(0.0,0.0,-1),0.5,&first_mat);
   std::vector <sphere> spheres = {world_sphere,first_sphere};
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 1;
+  int samples = 100;
   //Render Details (Iterate and Create Image)
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {
