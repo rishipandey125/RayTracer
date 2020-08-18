@@ -46,6 +46,11 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
     if (t > 0.0) {
       if (t < closest) {
         closest = t;
+        std::cout << "HitPoint:" << std::endl;
+        hit_point.print();
+        std::cout << "Object: " << std::endl;
+        objects[i].print();
+        std::cout << "--NEXT--" << std::endl;
         point hit_point = casted_ray.get_point_at(t);
         record.success = true;
         record.hit_point = hit_point;
@@ -85,7 +90,9 @@ void output_color(color &pixel, int samples) {
   std::cout << r << ' ' << g << ' ' << b << '\n';
 }
 
-//clean/document materials implementation
+//shadows error could be that the shadow is a "hit" for the sphere it is a shadow for, instead of
+//a hit for the base ground sphere.
+
 int main() {
   camera cam;
 
@@ -99,7 +106,7 @@ int main() {
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 1;
+  int samples = 100;
   //Render Details (Iterate and Create Image)
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {

@@ -34,3 +34,9 @@ float sphere::hit_sphere(ray &casted_ray) {
 vec sphere::get_normal_vector(point point_on_sphere) {
   return point_on_sphere - this->center;
 }
+
+void sphere::print() {
+  std::cout << "Sphere at Center:" << std::endl;
+  this->center.print();
+  std::cout << "With Radius: " << this->radius << std::endl;
+}
