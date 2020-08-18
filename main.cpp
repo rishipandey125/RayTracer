@@ -6,7 +6,6 @@
 #include "ray.cpp"
 #include "sphere.cpp"
 #include "camera.cpp"
-//reimplement materials class
 #include "material.h"
 #include "hit.h"
 
@@ -33,8 +32,9 @@ Traces Ray through the Scene
 @param casted_ray: ray casted from camera through viewport
 @param objects: data structure of all spheres in the scene
 @param depth: number of bounces for ray tracing
-//reflect vector (v_in - (2 * dot(v_in,normal) * normal))
 */
+
+//shadows need to be fixed - they are working like materials THIS IS NOT RIGHT
 color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
   if (depth <= 0) {
     return color(0,0,0);
