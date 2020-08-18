@@ -46,15 +46,15 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
     if (t > 0.0) {
       if (t < closest) {
         closest = t;
+        point hit_point = casted_ray.get_point_at(t);
+        record.success = true;
+        record.hit_point = hit_point;
+        record.object = &objects[i];
         std::cout << "HitPoint:" << std::endl;
         hit_point.print();
         std::cout << "Object: " << std::endl;
         objects[i].print();
         std::cout << "--NEXT--" << std::endl;
-        point hit_point = casted_ray.get_point_at(t);
-        record.success = true;
-        record.hit_point = hit_point;
-        record.object = &objects[i];
       }
     }
   }
@@ -106,9 +106,9 @@ int main() {
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 100;
+  int samples = 1;
   //Render Details (Iterate and Create Image)
-  std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+  // std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {
       for (int i = 0; i < image_width; i++) {
           color pixel;
@@ -119,7 +119,7 @@ int main() {
             ray cast_ray = cam.get_ray(u,v);
             pixel = pixel + trace(cast_ray,spheres,50);
           }
-        output_color(pixel,samples);
+        // output_color(pixel,samples);
       }
   }
   return 0;
