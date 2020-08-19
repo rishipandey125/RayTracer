@@ -22,10 +22,9 @@ float sphere::hit_sphere(ray &casted_ray) {
   float b = 2 * casted_ray.direction.dot(ac);
   float c = ac.dot(ac) - (this->radius*this->radius);
   float discriminant = (b*b) - (4*a*c);
-  if (discriminant > 0.0) {
+  if (discriminant >= 0.0) {
     float t = ((-b-sqrt(discriminant))/(2*a));
     return t;
-    // point impact = casted_ray.origin + (casted_ray.direction*t);
   }
   return -1.0;
 }

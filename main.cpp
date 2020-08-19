@@ -50,18 +50,13 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
         record.success = true;
         record.hit_point = hit_point;
         record.object = &objects[i];
-        std::cout << "HitPoint:" << std::endl;
-        hit_point.print();
-        std::cout << "Object: " << std::endl;
-        objects[i].print();
-        std::cout << "--NEXT--" << std::endl;
       }
     }
   }
 
   if (record.success) {
     record.random_unit_vec = random_unit_vector();
-    record.object_normal = record.object->get_normal_vector(record.hit_point);
+    record.object_normal = record.object->get_normal_vector(record.hit_point)*(1/(record.object->radius));
     record.casted_ray_direction = casted_ray.direction;
     if (record.object->sphere_material->scatter(record)) {
       return trace(record.next_ray,objects,depth-1)*record.object->sphere_material->base_color;
@@ -106,9 +101,9 @@ int main() {
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 1;
+  int samples = 100;
   //Render Details (Iterate and Create Image)
-  // std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+  std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {
       for (int i = 0; i < image_width; i++) {
           color pixel;
@@ -119,7 +114,7 @@ int main() {
             ray cast_ray = cam.get_ray(u,v);
             pixel = pixel + trace(cast_ray,spheres,50);
           }
-        // output_color(pixel,samples);
+        output_color(pixel,samples);
       }
   }
   return 0;
