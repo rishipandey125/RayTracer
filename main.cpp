@@ -92,12 +92,13 @@ int main() {
   camera cam;
 
   diffuse world_mat(color(0.2,0.2,0.2));
-  metal first_mat(color(0.8,0.8,0.8));
-  diffuse second_mat(color(1,0.0,0.0));
+  metal metal_mat(color(0.8,0.8,0.8));
+  diffuse diffuse_mat(color(1,0.0,0.0));
   sphere world_sphere(point(0,-100.5,-1),100,&world_mat);
-  sphere first_sphere(point(0.5,0.0,-1),0.5,&first_mat);
-  sphere second_sphere(point(-0.5,0.0,-1),0.5,&second_mat);
-  std::vector <sphere> spheres = {world_sphere,first_sphere,second_sphere};
+  sphere center_sphere(point(0.0,0.0,-1),0.5,&diffuse_mat);
+  sphere left_sphere(point(-1.0,0.0,-1),0.5,&metal_mat);
+  sphere right_sphere(point(1.0,0.0,-1),0.5,&metal_mat);
+  std::vector <sphere> spheres = {world_sphere,center_sphere,left_sphere,right_sphere};
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
