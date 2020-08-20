@@ -29,8 +29,9 @@ class diffuse: public material {
 
 class metal: public material {
   public:
-    metal(color b_color) {
+    metal(color b_color, float f) {
       base_color = b_color;
+      fuzz = f;
     }
     virtual bool scatter(hit &record) {
       vec v = record.casted_ray_direction;
@@ -38,11 +39,13 @@ class metal: public material {
       n.unit();
       float product  = v.dot(n)*2.0;
       vec reflect = v - (n*product);
-      record.next_ray = ray(record.hit_point,reflect-record.hit_point);
+      vec scatter = reflect + (record.random_unit_vec*fuzz);
+      record.next_ray = ray(record.hit_point,scatter-record.hit_point);
       if (record.next_ray.direction.dot(n) > 0) {
         return true;
       }
       return false;
     }
+    float fuzz;
 };
 #endif
