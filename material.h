@@ -90,25 +90,28 @@ class dialectric: public material {
       float reflect_prob = 1.0;
       float cosine;
       //when a ray shoots out of the dialectric back into the world
+      vec unit_v_in = v_in;
+      unit_v_in.unit();
       if (v_in.dot(n) > 0) {
         outward_normal = n*-1.0;
         refractive_quotient = refractive_index;
-        cosine = (v_in.unit()).dot(n);
+        cosine = (unit_v_in).dot(n);
       } else {
         //when a ray shoots into the dialectric sphere
         outward_normal = n;
         refractive_quotient = 1.0/refractive_index;
-        cosine = -1.0 * (v_in.unit()).dot(n);
+        cosine = -1.0 * (unit_v_in).dot(n);
       }
       //Refraction vs Reflection
       if (refract(v_in,outward_normal,refractive_quotient,refracted)) {
         reflect_prob = schlick(cosine,refractive_index);
       }
-      float rand_float = ((float) rand()/RAND_MAX);
       vec scatter;
-      if (rand_float < reflect_prob) {
+      float random_float = (float)(rand()/RAND_MAX);
+      if (random_float < reflect_prob) {
         scatter = reflected;
       } else {
+        std::cout << "RAY IS REFRACTED" << std::endl;
         scatter = refracted;
       }
       record.next_ray = ray(record.hit_point,scatter);
