@@ -5,11 +5,28 @@
 #include "hit.h"
 
 vec reflect(vec &v, vec &n) {
-  //n has to be a unit vector
   float product = v.dot(n)*2.0;
   vec reflect = v - (n*product);
   return reflect;
 }
+
+// vec refract(vec &v, vec&n, float r_q) {
+//   v.unit();
+//   float dot = v.dot(n);
+//   float disc = 1.0 - (r_q*r_q*(1-(dot*dot));
+//   if (disc > 0) {
+//     refracted = r_q * (v - (n * dot)) - (n*sqrt(disc));
+//     return true;
+//   }
+//   return false;
+// }
+//
+// float schlick(float cosine, float ref_idx) {
+//   float r0 = (1-ref_idx) / (1+ref_idx);
+//   r0 = r0*r0;
+//   return (r0 + (1-r0) * pow(1-cosine,5.0))
+// }
+
 
 class material {
   public:
@@ -29,7 +46,8 @@ class diffuse: public material {
     virtual bool scatter(hit &record) {
       point h_point = record.hit_point;
       point target = h_point + record.object_normal + record.random_unit_vec;
-      record.next_ray = ray(h_point,target-h_point);
+      vec scatter = target-h_point;
+      record.next_ray = ray(h_point,scatter);
       return true;
     }
 };
@@ -43,7 +61,7 @@ class metal: public material {
     virtual bool scatter(hit &record) {
       vec r = reflect(record.casted_ray_direction, record.object_normal);
       vec scatter = r + (record.random_unit_vec*fuzz);
-      record.next_ray = ray(record.hit_point,scatter-record.hit_point);
+      record.next_ray = ray(record.hit_point,scatter);
       if (record.next_ray.direction.dot(record.object_normal) > 0) {
         return true;
       }
@@ -52,18 +70,18 @@ class metal: public material {
     float fuzz;
 };
 
-class dialectric: public material {
-  public:
-    dialectric(float r_i) {
-      base_color = color(1.0,1.0,1.0);
-      refractive_index = r_i;
-    }
-    virtual bool scatter(hit &record) {
-      //v is the normal vector starting at hitpoint to center
-      
-
-      //internal normal vector?
-    }
-    float refractive_index;
-};
+// class dialectric: public material {
+//   public:
+//     dialectric(float r_i) {
+//       base_color = color(1.0,1.0,1.0);
+//       refractive_index = r_i;
+//     }
+//     virtual bool scatter(hit &record) {
+//       //v is the normal vector starting at hitpoint to center
+//
+//
+//       //internal normal vector?
+//     }
+//     float refractive_index;
+// };
 #endif
