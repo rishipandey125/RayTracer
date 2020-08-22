@@ -41,12 +41,12 @@ class metal: public material {
       fuzz = f;
     }
     virtual bool scatter(hit &record) {
-      vec n = record.object_normal;
+      // vec n = record.object_normal;
       // n.unit();
-      vec r = reflect(record.casted_ray_direction, n);
+      vec r = reflect(record.casted_ray_direction, record.object_normal);
       vec scatter = r + (record.random_unit_vec*fuzz);
       record.next_ray = ray(record.hit_point,scatter-record.hit_point);
-      if (record.next_ray.direction.dot(n) > 0) {
+      if (record.next_ray.direction.dot(record.object_normal) > 0) {
         return true;
       }
       return false;
