@@ -41,8 +41,6 @@ class metal: public material {
       fuzz = f;
     }
     virtual bool scatter(hit &record) {
-      // vec n = record.object_normal;
-      // n.unit();
       vec r = reflect(record.casted_ray_direction, record.object_normal);
       vec scatter = r + (record.random_unit_vec*fuzz);
       record.next_ray = ray(record.hit_point,scatter-record.hit_point);
@@ -54,17 +52,18 @@ class metal: public material {
     float fuzz;
 };
 
-// class dialectric: public material {
-//   public:
-//     dialectric(float r_i) {
-//       base_color = color(1.0,1.0,1.0);
-//       refractive_index = r_i;
-//     }
-//     virtual bool scatter(hit &record) {
-//       //v is the normal vector starting at hitpoint to center
-//
-//       //internal normal vector?
-//     }
-//     float refractive_index;
-// };
+class dialectric: public material {
+  public:
+    dialectric(float r_i) {
+      base_color = color(1.0,1.0,1.0);
+      refractive_index = r_i;
+    }
+    virtual bool scatter(hit &record) {
+      //v is the normal vector starting at hitpoint to center
+      
+
+      //internal normal vector?
+    }
+    float refractive_index;
+};
 #endif
