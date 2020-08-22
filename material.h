@@ -42,7 +42,7 @@ class metal: public material {
     }
     virtual bool scatter(hit &record) {
       vec n = record.object_normal;
-      n.unit();
+      // n.unit();
       vec r = reflect(record.casted_ray_direction, n);
       vec scatter = r + (record.random_unit_vec*fuzz);
       record.next_ray = ray(record.hit_point,scatter-record.hit_point);
