@@ -3,7 +3,14 @@
 #include "ray.h"
 #include "vec.h"
 #include "hit.h"
-//circular dependency has everything to do with how we declare hit here
+
+vec reflect(vec &v, vec &n) {
+  //n has to be a unit vector
+  float product = v.dot(n)*2.0;
+  vec reflect = v - (n*product);
+  return reflect;
+}
+
 class material {
   public:
     color base_color;
@@ -34,12 +41,10 @@ class metal: public material {
       fuzz = f;
     }
     virtual bool scatter(hit &record) {
-      vec v = record.casted_ray_direction;
       vec n = record.object_normal;
       n.unit();
-      float product  = v.dot(n)*2.0;
-      vec reflect = v - (n*product);
-      vec scatter = reflect + (record.random_unit_vec*fuzz);
+      vec r = reflect(record.casted_ray_direction, n);
+      vec scatter = r + (record.random_unit_vec*fuzz);
       record.next_ray = ray(record.hit_point,scatter-record.hit_point);
       if (record.next_ray.direction.dot(n) > 0) {
         return true;
@@ -49,15 +54,17 @@ class metal: public material {
     float fuzz;
 };
 
-class dialectric: public material {
-  public:
-    dialectric(float r_i) {
-      base_color = color(1.0,1.0,1.0);
-      refractive_index = r_i;
-    }
-    virtual bool scatter(hit &record) {
-
-    }
-    float refractive_index;
-};
+// class dialectric: public material {
+//   public:
+//     dialectric(float r_i) {
+//       base_color = color(1.0,1.0,1.0);
+//       refractive_index = r_i;
+//     }
+//     virtual bool scatter(hit &record) {
+//       //v is the normal vector starting at hitpoint to center
+//
+//       //internal normal vector?
+//     }
+//     float refractive_index;
+// };
 #endif
