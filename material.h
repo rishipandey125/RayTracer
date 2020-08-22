@@ -106,14 +106,13 @@ class dialectric: public material {
       if (refract(v_in,outward_normal,refractive_quotient,refracted)) {
         reflect_prob = schlick(cosine,refractive_index);
       }
-      vec scatter;
-      float random_float = (float)(rand()/RAND_MAX);
-      if (random_float < reflect_prob) {
-        scatter = reflected;
-      } else {
-        std::cout << "RAY IS REFRACTED" << std::endl;
-        scatter = refracted;
-      }
+      vec scatter = refracted;
+      float random_float = ((float)rand())/((float)(RAND_MAX));
+      // if (random_float < reflect_prob) {
+      //   scatter = reflected;
+      // } else {
+      //   scatter = refracted;
+      // }
       record.next_ray = ray(record.hit_point,scatter);
       return true;
     }
