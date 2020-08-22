@@ -48,4 +48,16 @@ class metal: public material {
     }
     float fuzz;
 };
+
+class dialectric: public material {
+  public:
+    dialectric(float r_i) {
+      base_color = color(1.0,1.0,1.0);
+      refractive_index = r_i;
+    }
+    virtual bool scatter(hit &record) {
+
+    }
+    float refractive_index;
+};
 #endif
