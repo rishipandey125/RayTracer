@@ -3,6 +3,8 @@
 #include "ray.h"
 #include "vec.h"
 #include "hit.h"
+#include <cmath>
+#include <cstdlib>
 
 vec reflect(vec &v, vec &n) {
   float product = v.dot(n)*2.0;
@@ -10,22 +12,23 @@ vec reflect(vec &v, vec &n) {
   return reflect;
 }
 
-// vec refract(vec &v, vec&n, float r_q) {
-//   v.unit();
-//   float dot = v.dot(n);
-//   float disc = 1.0 - (r_q*r_q*(1-(dot*dot));
-//   if (disc > 0) {
-//     refracted = r_q * (v - (n * dot)) - (n*sqrt(disc));
-//     return true;
-//   }
-//   return false;
-// }
-//
-// float schlick(float cosine, float ref_idx) {
-//   float r0 = (1-ref_idx) / (1+ref_idx);
-//   r0 = r0*r0;
-//   return (r0 + (1-r0) * pow(1-cosine,5.0))
-// }
+bool refract(vec &v, vec&n, float r_q, vec &refracted) {
+  v.unit();
+  float dot = v.dot(n);
+  float disc = 1.0 - (r_q*r_q*(1-(dot*dot)));
+  if (disc > 0) {
+    refracted = (v - (n * dot))*r_q - (n*sqrt(disc));
+    return true;
+  }
+  return false;
+}
+
+//approximates the reflectance of a fresnel material
+float schlick(float cosine, float ref_idx) {
+  float r0 = (1-ref_idx) / (1+ref_idx);
+  r0 = r0*r0;
+  return (r0 + (1-r0) * pow(1-cosine,5.0));
+}
 
 
 class material {
@@ -70,18 +73,47 @@ class metal: public material {
     float fuzz;
 };
 
-// class dialectric: public material {
-//   public:
-//     dialectric(float r_i) {
-//       base_color = color(1.0,1.0,1.0);
-//       refractive_index = r_i;
-//     }
-//     virtual bool scatter(hit &record) {
-//       //v is the normal vector starting at hitpoint to center
-//
-//
-//       //internal normal vector?
-//     }
-//     float refractive_index;
-// };
+class dialectric: public material {
+  public:
+    dialectric(float r_i) {
+      base_color = color(1.0,1.0,1.0);
+      refractive_index = r_i;
+    }
+    virtual bool scatter(hit &record) {
+      //v is the normal vector starting at hitpoint to center
+      vec v_in = record.casted_ray_direction;
+      vec n = record.object_normal;
+      vec reflected = reflect(v_in, n);
+      vec refracted;
+      vec outward_normal;
+      float refractive_quotient;
+      float reflect_prob = 1.0;
+      float cosine;
+      //when a ray shoots out of the dialectric back into the world
+      if (v_in.dot(n) > 0) {
+        outward_normal = n*-1.0;
+        refractive_quotient = refractive_index;
+        cosine = (v_in.unit()).dot(n);
+      } else {
+        //when a ray shoots into the dialectric sphere
+        outward_normal = n;
+        refractive_quotient = 1.0/refractive_index;
+        cosine = -1.0 * (v_in.unit()).dot(n);
+      }
+      //Refraction vs Reflection
+      if (refract(v_in,outward_normal,refractive_quotient,refracted)) {
+        reflect_prob = schlick(cosine,refractive_index);
+      }
+      float rand_float = ((float) rand()/RAND_MAX);
+      vec scatter;
+      if (rand_float < reflect_prob) {
+        scatter = reflected;
+      } else {
+        scatter = refracted;
+      }
+      record.next_ray = ray(record.hit_point,scatter);
+      return true;
+    }
+    float refractive_index;
+};
 #endif
