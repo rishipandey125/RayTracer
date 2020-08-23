@@ -85,14 +85,14 @@ int main() {
 
   //Initialize Spheres
   sphere world_sphere(point(0,-100.5,-1),100,&world_mat);
-  sphere center_sphere(point(0.0,0.0,-1),0.5,&metal_mat);
-  sphere left_sphere(point(-1.0,0.0,-1.0),0.5,&diffuse_mat);
-  sphere right_sphere(point(1.0,0.0,-1.0),0.5,&diffuse_mat);
+  sphere center_sphere(point(0.0,0.0,-1),0.5,&diffuse_mat);
+  sphere left_sphere(point(-1.0,0.0,-1.0),0.5,&metal_mat);
+  sphere right_sphere(point(1.0,0.0,-1.0),0.5,&metal_mat);
   std::vector <sphere> spheres = {world_sphere,center_sphere,left_sphere,right_sphere};
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 1;
+  int samples = 100;
   //Render Details (Iterate and Create Image)
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {
