@@ -16,6 +16,9 @@ class camera {
     float viewport_width;
     float focal_length;
     float vertical_fov;
+    vec lower_left_corner;
+    vec horizontal;
+    vec vertical;
 
 };
 
