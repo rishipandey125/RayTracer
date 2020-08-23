@@ -6,7 +6,7 @@
 //Camera Class Header
 class camera {
   public:
-    camera(float camera_aspect_ratio, float vfov);
+    camera(point c_origin, float camera_aspect_ratio, float vfov);
     camera(point camera_origin, float camera_aspect_ratio,
           float camera_viewport_height, float camera_focal_length);
     ray get_ray(float &u, float &v);

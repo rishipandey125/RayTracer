@@ -90,7 +90,8 @@ void output_color(color &pixel, int samples) {
 
 int main() {
   //Initialize Camera
-  camera cam(16.0/9.0,60);
+  point camera_origin(-2,0,0);
+  camera cam(camera_origin,16.0/9.0,90);
 
   //Initialize Materials
   diffuse world_mat(color(0.2,0.2,0.2));

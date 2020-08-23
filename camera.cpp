@@ -3,8 +3,8 @@
 //Camera Class
 
 //Default Constructor
-camera::camera(float camera_aspect_ratio, float vfov) {
-  this->origin = point(0.0,0.0,0.0);
+camera::camera(point c_origin, float camera_aspect_ratio, float vfov) {
+  this->origin = c_origin;
   this->aspect_ratio = camera_aspect_ratio;
   float theta = vfov*(M_PI/180.0);
   float h = tan(theta/2.0);
