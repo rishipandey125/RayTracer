@@ -13,8 +13,9 @@ vec reflect(vec &v, vec &n) {
 }
 
 bool refract(vec &v, vec&n, float r_q, vec &refracted) {
-  v.unit();
-  float dot = v.dot(n);
+  vec uv = v*-1.0;
+  uv.unit();
+  float dot = uv.dot(n);
   float disc = 1.0 - (r_q*r_q*(1-(dot*dot)));
   if (disc > 0) {
     refracted = (v - (n * dot))*r_q - (n*sqrt(disc));
@@ -111,7 +112,7 @@ class dialectric: public material {
       // if (random_float < reflect_prob) {
       //   scatter = reflected;
       // } else {
-      //   scatter = refracted;
+        scatter = refracted;
       // }
       record.next_ray = ray(record.hit_point,scatter);
       return true;
