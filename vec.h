@@ -8,6 +8,7 @@ class vec {
     float length();
     void unit();
     float dot(const vec &vector);
+    vec cross(const vec &vector);
     vec operator+(const vec &vector);
     vec operator-(const vec &vector);
     void operator=(const vec &vector);

@@ -33,6 +33,13 @@ float vec::dot(const vec &vector) {
   return (this->x*vector.x) + (this->y*vector.y) + (this->z*vector.z);
 }
 
+vec vec::cross(const vec &vector) {
+  float x = (this->y*vector.z)-(this->z*vector.y);
+  float y = -1.0 * ((this->x*vector.z)-(this->z*vector.x));
+  float z = (this->x*vector.y)-(this->y*vector.x);
+  return vec(x,y,z);
+}
+
 vec vec::operator+(const vec &vector) {
   return vec(this->x + vector.x, this->y + vector.y, this->z + vector.z);
 }

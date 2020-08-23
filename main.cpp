@@ -90,7 +90,7 @@ void output_color(color &pixel, int samples) {
 
 int main() {
   //Initialize Camera
-  point camera_origin(-2,0,0);
+  point camera_origin(0,0,0);
   camera cam(camera_origin,16.0/9.0,90);
 
   //Initialize Materials
@@ -110,7 +110,7 @@ int main() {
   int image_height = (int)(image_width/cam.aspect_ratio);
   int samples = 1;
   //Render Details (Iterate and Create Image)
-  std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+  // std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {
       for (int i = 0; i < image_width; i++) {
           color pixel;
@@ -121,7 +121,7 @@ int main() {
             ray cast_ray = cam.get_ray(u,v);
             pixel = pixel + trace(cast_ray,spheres,50);
           }
-        output_color(pixel,samples);
+        // output_color(pixel,samples);
       }
   }
   return 0;

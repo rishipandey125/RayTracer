@@ -24,6 +24,8 @@ camera::camera(point camera_origin, float camera_aspect_ratio,
 }
 
 //Generate Ray Based Off of UV Frame Location
+//we need to decide a system for where the camera can look
+//to move the camera we also need to move the viewport
 ray camera::get_ray(float &u, float &v) {
   float viewport_x = (u*this->viewport_width)-(this->viewport_width/2);
   float viewport_y = -1.0*((this->viewport_height/2)-(v*this->viewport_height));
