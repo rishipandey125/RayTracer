@@ -1,11 +1,14 @@
 #include "camera.h"
+#include <cmath>
 //Camera Class
 
 //Default Constructor
-camera::camera() {
+camera::camera(float camera_aspect_ratio, float vfov) {
   this->origin = point(0.0,0.0,0.0);
-  this->aspect_ratio = 16.0/9.0;
-  this->viewport_height = 2.0;
+  this->aspect_ratio = camera_aspect_ratio;
+  float theta = vfov*(M_PI/180.0);
+  float h = tan(theta/2.0);
+  this->viewport_height = 2.0 * h;
   this->viewport_width = this->viewport_height*this->aspect_ratio;
   this->focal_length = 1.0;
 }

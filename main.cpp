@@ -90,7 +90,7 @@ void output_color(color &pixel, int samples) {
 
 int main() {
   //Initialize Camera
-  camera cam;
+  camera cam(16.0/9.0,60);
 
   //Initialize Materials
   diffuse world_mat(color(0.2,0.2,0.2));
@@ -107,7 +107,7 @@ int main() {
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 100;
+  int samples = 1;
   //Render Details (Iterate and Create Image)
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {
