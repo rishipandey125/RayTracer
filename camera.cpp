@@ -10,13 +10,11 @@ camera::camera(point c_origin, float camera_aspect_ratio, float vfov) {
   float h = tan(theta/2.0);
   vec lookat(0,0,-1);
   vec vup(0,1,0);
-  vec w = c_origin - lookat;
-  w.unit();
-  vec u = vup.cross(w);
-  u.unit();
+  vec w = c_origin - lookat; w.unit();
+  vec u = vup.cross(w); u.unit();
   vec v = w.cross(u);
-  this->viewport_height = 2.0 * h;
-  this->viewport_width = this->viewport_height*this->aspect_ratio;
+  float viewport_height = 2.0 * h;
+  float viewport_width = viewport_height*this->aspect_ratio;
   this->horizontal = u*viewport_width;
   this->vertical = v*viewport_height;
   this->focal_length = 1.0;
@@ -25,8 +23,6 @@ camera::camera(point c_origin, float camera_aspect_ratio, float vfov) {
 }
 
 //Generate Ray Based Off of UV Frame Location
-//we need to decide a system for where the camera can look
-//to move the camera we also need to move the viewport
 ray camera::get_ray(float &u, float &v) {
   return ray(this->origin, this->lower_left_corner + (this->horizontal*u) + (this->vertical*v) - this->origin);
 }

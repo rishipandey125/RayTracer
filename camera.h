@@ -10,8 +10,6 @@ class camera {
     ray get_ray(float &u, float &v);
     point origin;
     float aspect_ratio;
-    float viewport_height;
-    float viewport_width;
     float focal_length;
     float vertical_fov;
     vec lower_left_corner;
