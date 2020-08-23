@@ -61,7 +61,7 @@ vec vec::operator*(const float &scalar) {
   return vec(this->x * scalar, this->y * scalar, this->z * scalar);
 }
 
-vec vec::vec operator/(const float &scalar) {
+vec vec::operator/(const float &scalar) {
   return vec(this->x / scalar, this->y / scalar, this->z / scalar);
 }
 
