@@ -97,13 +97,12 @@ int main() {
   metal metal_mat_fuzz(color(0.8,0.8,0.8),0.3);
   metal metal_mat(color(0.8,0.8,0.8),0.0);
   diffuse diffuse_mat(color(1,0.0,0.0));
-  dialectric glass_mat(1.5);
 
   //Initialize Spheres
   sphere world_sphere(point(0,-100.5,-1),100,&world_mat);
-  sphere center_sphere(point(0.0,0.0,-1),0.5,&glass_mat);
-  sphere left_sphere(point(-1.0,0.0,-2.0),0.5,&diffuse_mat);
-  sphere right_sphere(point(1.0,0.0,-2.0),0.5,&diffuse_mat);
+  sphere center_sphere(point(0.0,0.0,-1),0.5,&diffuse_mat);
+  sphere left_sphere(point(-3.0,0.0,-2.0),0.5,&metal_mat);
+  sphere right_sphere(point(3.0,0.0,-2.0),0.5,&metal_mat);
   std::vector <sphere> spheres = {world_sphere,center_sphere,left_sphere,right_sphere};
 
   int image_width = 1000;
