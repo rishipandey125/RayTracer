@@ -8,24 +8,7 @@
 #include "camera.cpp"
 #include "material.h"
 #include "hit.h"
-
-//Generates Random Float between 0 and 1
-float random_float() {
-  return ((float) rand()/RAND_MAX);
-}
-
-//Generates Random Float between min and max
-float random_float(float min, float max) {
-  return min + ((max-min)*random_float());
-}
-
-//Creates a random unit vector from the unit sphere
-vec random_unit_vector() {
-  float a = random_float(0.0,2.0*M_PI);
-  float z = random_float(-1.0,1.0);
-  float r = sqrt(1-(z*z));
-  return vec(r*cos(a),r*sin(a),z);
-}
+#include "random.cpp"
 
 /*
 Traces Ray through the Scene
@@ -87,10 +70,12 @@ void output_color(color &pixel, int samples) {
 
 int main() {
   //Initialize Camera
-  point camera_origin(0,0,0);
+  point camera_origin(3,3,2);
+  point look_at(0,0,-1);
   float aspect_ratio = 16.0/9.0;
-  float vertical_fov = 90;
-  camera cam(camera_origin,aspect_ratio,vertical_fov);
+  float vertical_fov = 20;
+  float aperture = 0.05;
+  camera cam(camera_origin,look_at, aspect_ratio,vertical_fov,aperture);
 
   //Initialize Materials
   diffuse world_mat(color(0.2,0.2,0.2));
@@ -100,14 +85,14 @@ int main() {
 
   //Initialize Spheres
   sphere world_sphere(point(0,-100.5,-1),100,&world_mat);
-  sphere center_sphere(point(0.0,0.0,-1),0.5,&diffuse_mat);
-  sphere left_sphere(point(-2.0,0.0,-2.0),0.5,&metal_mat);
-  sphere right_sphere(point(2.0,0.0,-2.0),0.5,&metal_mat);
+  sphere center_sphere(point(0.0,0.0,-1),0.5,&metal_mat);
+  sphere left_sphere(point(-1.0,0.0,-1.0),0.5,&diffuse_mat);
+  sphere right_sphere(point(1.0,0.0,-1.0),0.5,&diffuse_mat);
   std::vector <sphere> spheres = {world_sphere,center_sphere,left_sphere,right_sphere};
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 1;
+  int samples = 100;
   //Render Details (Iterate and Create Image)
   std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {

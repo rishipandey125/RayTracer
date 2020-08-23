@@ -4,7 +4,6 @@
 #include "vec.h"
 #include "hit.h"
 #include <cmath>
-#include <cstdlib>
 
 vec reflect(vec &v, vec &n) {
   float product = v.dot(n)*2.0;
