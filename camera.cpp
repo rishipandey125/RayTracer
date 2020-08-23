@@ -8,9 +8,17 @@ camera::camera(point c_origin, float camera_aspect_ratio, float vfov) {
   this->aspect_ratio = camera_aspect_ratio;
   float theta = vfov*(M_PI/180.0);
   float h = tan(theta/2.0);
+  // vec lookat(0,0,-1);
+  // vec vup(0,1,0);
+  // vec w = c_origin - lookat;
+  // w.unit();
+  // vec u = vup.cross(w);
+  // u.unit()
+  // vec v = w.cross(u);
   this->viewport_height = 2.0 * h;
   this->viewport_width = this->viewport_height*this->aspect_ratio;
   this->focal_length = 1.0;
+  
 }
 
 //Specific Constructor
