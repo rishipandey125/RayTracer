@@ -32,6 +32,8 @@ camera::camera(point c_origin, point look_at, float camera_aspect_ratio, float v
   float scale = 2.0;
   this->lower_left_corner = c_origin - this->horizontal/scale - this->vertical/scale - (this->w*focus_distance);
   this->lens_radius = aperture/2.0;
+  std::cout << "focus_distance: " << focus_distance << std::endl;
+  std::cout << "aperture: " << aperture << std::endl;
 }
 
 //Generate Ray Based Off of UV Frame Location
