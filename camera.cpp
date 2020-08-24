@@ -8,20 +8,22 @@ If those images are averaged together then everything - but the thing in the foc
 This is because we are looking at objects from different views a bunch of times and then averaging those views.
 This is what causes the blurriness. There is only one thing in focus because all the pinhole cameras are told to look at
 one thing. This Allows us to create a depth of field. The larger the apeture (lower the f-stop) the more pinhole cameras
-you have. This means that there will be a higher depth of field because things not in focus will be blurrier. 
+you have. This means that there will be a higher depth of field because things not in focus will be blurrier.
 */
 //Camera Class
 //Camera Constructor
 camera::camera(point c_origin, point look_at, float camera_aspect_ratio, float vfov, float aperture) {
   this->origin = c_origin;
   this->aspect_ratio = camera_aspect_ratio;
+  //fov
   float theta = vfov*(M_PI/180.0);
   float h = tan(theta/2.0);
   vec vup(0,1,0);
+  //apeture disk
   this->w = c_origin - look_at; this->w.unit();
   this->u = vup.cross(this->w); this->u.unit();
   this->v = this->w.cross(this->u);
-  float focus_distance = this->w.length();
+  float focus_distance = vec(c_origin-look_at).length();
   float viewport_height = 2.0 * h;
   float viewport_width = viewport_height*this->aspect_ratio;
   this->horizontal = this->u*focus_distance*viewport_width;
