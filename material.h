@@ -3,6 +3,7 @@
 #include "ray.h"
 #include "vec.h"
 #include "hit.h"
+#include "random.cpp"
 #include <cmath>
 
 vec reflect(vec &v, vec &n) {
@@ -17,6 +18,12 @@ vec refract(vec &v, vec &n, float ni_over_nt) {
   float length = r_out_perp.length();
   vec r_out_par = n * -1.0 * sqrt(fabs(1.0-(length*length)));
   return r_out_perp + r_out_par;
+}
+
+float schlick(double cosine, double r_i) {
+  float r0 = (1-r_i) / (1+r_i);
+  r0 = r0*r0;
+  return r0 + ((1-r0)*pow((1-cosine),5));
 }
 
 class material {
@@ -81,9 +88,10 @@ class dialectric: public material {
       }
       dir.unit();
       float cos_theta = fmin(n.dot(dir*-1.0),1.0);
-      float sin_theta = sqrt(1.0-(cos_theta*cos_theta));
+      // float sin_theta = sqrt(1.0-(cos_theta*cos_theta));
       vec scatter;
-      if (ni_over_nt * sin_theta > 1.0) {
+      float reflect_prob = schlick(cos_theta,ni_over_nt);
+      if (random_float() < reflect_prob) {
         scatter = reflect(dir,n);
       } else {
         scatter = refract(dir,n,ni_over_nt);

@@ -1,5 +1,7 @@
-#include <cstdlib>
 #pragma once
+#include <cstdlib>
+#include <cmath>
+#include "vec.h"
 //Generates Random Float between 0 and 1
 float random_float() {
   return ((float) rand()/RAND_MAX);
