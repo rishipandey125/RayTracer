@@ -74,6 +74,9 @@ class dialectric: public material {
       base_color = color(1,1,1);
       refractive_index = r_i;
     }
+    //the bug has something to do with refraction - fix that and then it should work!
+    //i think the bug is the fact that we never refract out never flip the normal
+
     virtual bool scatter(hit &record) {
       vec dir = record.casted_ray_direction;
       vec n = record.object_normal;
@@ -95,7 +98,7 @@ class dialectric: public material {
       //   scatter = reflect(dir,n);
       // } else {
       //   scatter = refract(dir,n,ni_over_nt);
-      // }
+      // }g
       scatter = refract(dir,n,ni_over_nt);
       record.next_ray = ray(record.hit_point,scatter);
       return true;
