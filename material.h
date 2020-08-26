@@ -13,7 +13,7 @@ vec reflect(vec &v, vec &n) {
 }
 
 vec refract(vec &v, vec &n, float ni_over_nt) {
-  float cos_theta = n.dot(v*-1.0);
+  float cos_theta = n.dot(v);
   vec r_out_perp = (v + (n * cos_theta)) * ni_over_nt;
   float length = r_out_perp.length();
   vec r_out_par = n * -1.0 * sqrt(fabs(1.0-(length*length)));
