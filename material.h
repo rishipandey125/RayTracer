@@ -91,11 +91,12 @@ class dialectric: public material {
       // float sin_theta = sqrt(1.0-(cos_theta*cos_theta));
       vec scatter;
       float reflect_prob = schlick(cos_theta,ni_over_nt);
-      if (random_float() < reflect_prob) {
-        scatter = reflect(dir,n);
-      } else {
-        scatter = refract(dir,n,ni_over_nt);
-      }
+      // if (random_float() < reflect_prob) {
+      //   scatter = reflect(dir,n);
+      // } else {
+      //   scatter = refract(dir,n,ni_over_nt);
+      // }
+      scatter = refract(dir,n,ni_over_nt);
       record.next_ray = ray(record.hit_point,scatter);
       return true;
      }
