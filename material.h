@@ -12,12 +12,14 @@ vec reflect(vec &v, vec &n) {
   return reflect;
 }
 
-vec refract(vec &v, vec &n, float ni_over_nt) {
-  float cos_theta = n.dot(v);
-  vec r_out_perp = (v + (n * cos_theta)) * ni_over_nt;
-  float length = r_out_perp.length();
-  vec r_out_par = n * -1.0 * sqrt(fabs(1.0-(length*length)));
-  return r_out_perp + r_out_par;
+bool refract(vec &v, vec &n, float ni_over_nt, vec &refracted) {
+  float dt = v.dot(n);
+  float disc=  1.0 - ((ni_over_nt * ni_over_nt) * (1-dt*dt));
+  if (disc > 0) {
+    refracted =  (v-(n*dt)) - (n*sqrt(disc))*ni_over_nt;
+    return true;
+  }
+  return false;
 }
 
 float schlick(double cosine, double r_i) {
@@ -75,31 +77,28 @@ class dialectric: public material {
       refractive_index = r_i;
     }
     //the bug has something to do with refraction - fix that and then it should work!
-    //i think the bug is the fact that we never refract out never flip the normal
 
     virtual bool scatter(hit &record) {
       vec dir = record.casted_ray_direction;
       vec n = record.object_normal;
       float ni_over_nt;
-      if (dir.dot(n) > 0) {
-        // shooting out of glass
-        ni_over_nt = refractive_index;
-        n = n*-1.0;
-      } else {
-        //shooting into glass
-        ni_over_nt = 1/refractive_index;
-      }
+      float reflect_prob = 1.0;
+      float cosine;
       dir.unit();
-      float cos_theta = fmin(n.dot(dir*-1.0),1.0);
-      // float sin_theta = sqrt(1.0-(cos_theta*cos_theta));
-      vec scatter;
-      float reflect_prob = schlick(cos_theta,ni_over_nt);
-      // if (random_float() < reflect_prob) {
-      //   scatter = reflect(dir,n);
-      // } else {
-      //   scatter = refract(dir,n,ni_over_nt);
-      // }g
-      scatter = refract(dir,n,ni_over_nt);
+      if (dir.dot(n) > 0) {
+        n = n * -1.0;
+        ni_over_nt = refractive_index;
+        cosine = dir.dot(n);
+      } else {
+        ni_over_nt = 1.0/refractive_index;
+        cosine = -1.0 * dir.dot(n);
+      }
+      vec refracted;
+      if (refract(dir,n,ni_over_nt,refracted)) {
+        reflect_prob = schlick(cosine,refractive_index);
+      }
+      // std::cout << reflect_prob << std::endl;
+      vec scatter = refracted;
       record.next_ray = ray(record.hit_point,scatter);
       return true;
      }

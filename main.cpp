@@ -41,13 +41,17 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
     record.random_unit_vec = random_unit_vector();
     record.object_normal = record.object->get_normal_vector(record.hit_point)*(1/(record.object->radius));
     record.casted_ray_direction = (casted_ray.direction);
+    std::cout << casted_ray.direction.dot(record.object_normal) << std::endl;
+    // if (casted_ray.direction.dot(record.object_normal) > 0) {
+    //   std::cout << "here it is" << std::endl;
+    // }
     if (record.object->sphere_material->scatter(record)) {
       return trace(record.next_ray,objects,depth-1)*record.object->sphere_material->base_color;
     } else {
       return color(0,0,0);
     }
   }
-//
+
   //gradient sky (global illumination)
   vec unit_direction = casted_ray.direction;
   unit_direction.unit();
@@ -95,9 +99,9 @@ int main() {
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 100;
+  int samples = 1;
   //Render Details (Iterate and Create Image)
-  std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+  // std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {
       for (int i = 0; i < image_width; i++) {
           color pixel;
@@ -108,7 +112,7 @@ int main() {
             ray cast_ray = cam.get_ray(u,v);
             pixel = pixel + trace(cast_ray,spheres,50);
           }
-        output_color(pixel,samples);
+        // output_color(pixel,samples);
       }
   }
   return 0;
