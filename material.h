@@ -86,6 +86,7 @@ class dialectric: public material {
       float cosine;
       dir.unit();
       if (dir.dot(n) > 0) {
+        std::cout << "Inverted Normal!" << std::endl;
         n = n * -1.0;
         ni_over_nt = refractive_index;
         cosine = dir.dot(n);
@@ -97,7 +98,6 @@ class dialectric: public material {
       if (refract(dir,n,ni_over_nt,refracted)) {
         reflect_prob = schlick(cosine,refractive_index);
       }
-      // std::cout << reflect_prob << std::endl;
       vec scatter = refracted;
       record.next_ray = ray(record.hit_point,scatter);
       return true;

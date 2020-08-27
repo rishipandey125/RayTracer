@@ -15,6 +15,7 @@ class vec {
     vec operator*(const vec &vector);
     vec operator*(const float &scalar);
     vec operator/(const float &scalar);
+    bool operator==(const vec &vector);
     void clamp();
     void root();
     void print();

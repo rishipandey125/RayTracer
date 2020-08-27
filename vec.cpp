@@ -65,6 +65,12 @@ vec vec::operator/(const float &scalar) {
   return vec(this->x / scalar, this->y / scalar, this->z / scalar);
 }
 
+bool vec::operator==(const vec&vector) {
+  if (this->x == vector.x && this->y == vector.y && this->z == vector.z) {
+    return true;
+  }
+  return false;
+}
 //Clamping Color on RGB Scale
 void vec::clamp() {
   if (this->x > 1) {
