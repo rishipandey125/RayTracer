@@ -86,7 +86,7 @@ class dialectric: public material {
       float cosine;
       dir.unit();
       if (dir.dot(n) > 0) {
-        // std::cout << "Inverted Normal!" << std::endl;
+        std::cout << "Inverted Normal!" << std::endl;
         n = n * -1.0;
         ni_over_nt = refractive_index;
         cosine = dir.dot(n);

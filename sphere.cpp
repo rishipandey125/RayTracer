@@ -20,14 +20,20 @@ Returns the Closest Hit in Parametric Value
 float sphere::hit_sphere(ray &casted_ray) {
   vec ac = casted_ray.origin - this->center;
   float a = casted_ray.direction.dot(casted_ray.direction);
-  std::cout << "Length of Casted Ray (A): " << a << std::endl;
-  std::cout << "Lenght of Casted Ray (Vec Internal)" << casted_ray.direction.length() << std::endl;
   float b = 2 * casted_ray.direction.dot(ac);
   float c = ac.dot(ac) - (this->radius*this->radius);
   float discriminant = (b*b) - (4*a*c);
   if (discriminant > 0.0) {
-    float t = ((-b-sqrt(discriminant))/(2*a));
-    return t;
+    float t_first = ((-b-sqrt(discriminant))/(2*a));
+    float t_second = ((-b+sqrt(discriminant))/(2*a));
+    if (t_first >= 0.01) {
+      return t_first;
+    } else if (t_second >= 0.01) {
+      return t_second;
+    }
+    // both negative = no hit
+    // both positive = hit from outside take the first one
+    // one negative and one positive take the positve one (comes from inside)
   }
   return -1.0;
 }
