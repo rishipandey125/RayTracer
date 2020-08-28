@@ -98,11 +98,11 @@ class dialectric: public material {
       }
       float cosine = fmin(n.dot(dir*-1.0),1.0);
       float sin = sqrt(1.0-(cosine*cosine));
-      if (ni_over_nt * sin > 1.0) {
-        vec scatter = reflect(dir,n);
-        record.next_ray = ray(record.hit_point,scatter);
-        return true;
-      }
+      // if (ni_over_nt * sin > 1.0) {
+      //   vec scatter = reflect(dir,n);
+      //   record.next_ray = ray(record.hit_point,scatter);
+      //   return true;
+      // }
       if (random_float() < schlick(cosine,refractive_index)) {
         vec scatter = reflect(dir,n);
         record.next_ray = ray(record.hit_point,scatter);
