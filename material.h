@@ -90,21 +90,25 @@ class dialectric: public material {
       vec n = record.object_normal;
       float ni_over_nt;
       dir.unit();
-      float cosine = fmin(n.dot(dir*-1.0),1.0);
       if (dir.dot(n) > 0) {
         n = n * -1.0;
         ni_over_nt = refractive_index;
       } else {
         ni_over_nt = 1.0/refractive_index;
       }
-      // std::cout << schlick(cosine,ni_over_nt) << std::endl;
+      float cosine = fmin(n.dot(dir*-1.0),1.0);
+      float sin = sqrt(1.0-(cosine*cosine));
+      if (ni_over_nt * sin > 1.0) {
+        vec scatter = reflect(dir,n);
+        record.next_ray = ray(record.hit_point,scatter);
+        return true;
+      }
+      if (random_float() < schlick(cosine,refractive_index)) {
+        vec scatter = reflect(dir,n);
+        record.next_ray = ray(record.hit_point,scatter);
+        return true;
+      }
       vec scatter = refract(dir,n,ni_over_nt);
-      // if (random_float() < schlick(cosine,refractive_index)) {
-      //   scatter = reflect(dir,n);
-      // } else {
-      //   // std::cout << "we refract" << std::endl;
-      //   scatter = refract(dir,n,ni_over_nt);
-      // }
       record.next_ray = ray(record.hit_point,scatter);
       return true;
      }

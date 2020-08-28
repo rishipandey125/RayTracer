@@ -23,7 +23,7 @@ float sphere::hit_sphere(ray &casted_ray) {
   float b = 2 * casted_ray.direction.dot(ac);
   float c = ac.dot(ac) - (this->radius*this->radius);
   float discriminant = (b*b) - (4*a*c);
-  if (discriminant > 0.0) {
+  if (discriminant >= 0.0) {
     // both negative = no hit
     // both positive = hit from outside take the first one
     // one negative and one positive take the positve one (comes from inside)
