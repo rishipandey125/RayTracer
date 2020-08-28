@@ -24,6 +24,9 @@ float sphere::hit_sphere(ray &casted_ray) {
   float c = ac.dot(ac) - (this->radius*this->radius);
   float discriminant = (b*b) - (4*a*c);
   if (discriminant > 0.0) {
+    // both negative = no hit
+    // both positive = hit from outside take the first one
+    // one negative and one positive take the positve one (comes from inside)
     float t_first = ((-b-sqrt(discriminant))/(2*a));
     float t_second = ((-b+sqrt(discriminant))/(2*a));
     if (t_first >= 0.01) {
@@ -31,9 +34,6 @@ float sphere::hit_sphere(ray &casted_ray) {
     } else if (t_second >= 0.01) {
       return t_second;
     }
-    // both negative = no hit
-    // both positive = hit from outside take the first one
-    // one negative and one positive take the positve one (comes from inside)
   }
   return -1.0;
 }
