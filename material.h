@@ -19,8 +19,17 @@ vec refract(vec &v, vec &n, float ni_over_nt) {
   vec r_out_parallel = n * -1.0 * sqrt(fabs(1.0-(length*length)));
   return r_out_perp + r_out_parallel;
 }
+// bool refract(vec &v, vec &n, float ni_over_nt, vec &refracted) {
+//   float dot = v.dot(n);
+//   float disc = 1.0 - (ni_over_nt * ni_over_nt * (1-(dot*dot)));
+//   if (disc > 0) {
+//     refracted = ((v-(n*dot)) - (n*sqrt(disc))) * ni_over_nt;
+//     return true;
+//   }
+//   return false;
+// }
 
-float schlick(double cosine, double r_i) {
+float schlick(float cosine, float r_i) {
   float r0 = (1-r_i) / (1+r_i);
   r0 = r0*r0;
   return r0 + ((1-r0)*pow((1-cosine),5));
@@ -81,20 +90,21 @@ class dialectric: public material {
       vec n = record.object_normal;
       float ni_over_nt;
       dir.unit();
+      float cosine = fmin(n.dot(dir*-1.0),1.0);
       if (dir.dot(n) > 0) {
         n = n * -1.0;
         ni_over_nt = refractive_index;
       } else {
         ni_over_nt = 1.0/refractive_index;
       }
-      float cos_theta = fmin(n.dot(dir*-1.0), 1.0);
-      float sch = schlick(cos_theta,ni_over_nt);
-      vec scatter;
-      if (random_float() < sch) {
-        scatter = reflect(dir,n);
-      } else {
-        scatter = refract(dir,n,ni_over_nt);
-      }
+      // std::cout << schlick(cosine,ni_over_nt) << std::endl;
+      vec scatter = refract(dir,n,ni_over_nt);
+      // if (random_float() < schlick(cosine,refractive_index)) {
+      //   scatter = reflect(dir,n);
+      // } else {
+      //   // std::cout << "we refract" << std::endl;
+      //   scatter = refract(dir,n,ni_over_nt);
+      // }
       record.next_ray = ray(record.hit_point,scatter);
       return true;
      }
