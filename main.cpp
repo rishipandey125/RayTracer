@@ -91,7 +91,7 @@ int main() {
   sphere center_sphere2(point(0.0,0.0,-1),-0.49,&glass_mat);
   sphere left_sphere(point(-1.0,0.0,-2.0),0.5,&red_mat);
   sphere right_sphere(point(1.0,0.0,-2.0),0.5,&blue_mat);
-  std::vector <sphere> spheres = {world_sphere,center_sphere,center_sphere2,left_sphere,right_sphere};
+  std::vector <sphere> spheres = {world_sphere,center_sphere2,left_sphere,right_sphere};
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
