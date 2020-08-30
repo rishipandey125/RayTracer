@@ -12,8 +12,7 @@ vec reflect(vec &v, vec &n) {
   return reflect;
 }
 
-vec refract(vec &v, vec &n, float ni_over_nt) {
-  float cos_theta = n.dot(v*-1.0);
+vec refract(vec &v, vec &n,float &cos_theta, float ni_over_nt) {
   vec r_out_perp = (v + (n*cos_theta))*ni_over_nt;
   float length = r_out_perp.length();
   vec r_out_parallel = n * -1.0 * sqrt(fabs(1.0-(length*length)));
@@ -87,12 +86,17 @@ class dialectric: public material {
         ni_over_nt = 1.0/refractive_index;
       }
       float cosine = fmin(n.dot(dir*-1.0),1.0);
+      float sin =  sqrt(1.0-(cosine*cosine));
+      if (ni_over_nt * sin > 1.0) {
+        vec reflect_vec = reflect(dir,n);
+        record.next_ray = ray(record.hit_point,reflect_vec);
+        return true;
+      }
       vec scatter;
-      float s = schlick(cosine,ni_over_nt);
-      if (random_float() < s) {
+      if (random_float() < schlick(cosine,refractive_index)) {
         scatter = reflect(dir,n);
       } else {
-        scatter = refract(dir,n,ni_over_nt);
+        scatter = refract(dir,n,cosine,ni_over_nt);
       }
       record.next_ray = ray(record.hit_point,scatter);
       return true;
