@@ -12,7 +12,7 @@ vec reflect(vec &v, vec &n) {
   return reflect;
 }
 
-vec refract(vec &v, vec &n,float &cos_theta, float ni_over_nt) {
+vec refract(vec &v, vec &n ,float &cos_theta, float ni_over_nt) {
   vec r_out_perp = (v + (n*cos_theta))*ni_over_nt;
   float length = r_out_perp.length();
   vec r_out_parallel = n * -1.0 * sqrt(fabs(1.0-(length*length)));
@@ -73,7 +73,7 @@ class dialectric: public material {
       base_color = color(1,1,1);
       refractive_index = r_i;
     }
-    //the bug has something to do with refraction - fix that and then it should work!
+    //the bug appears in the middle of the sphere
     virtual bool scatter(hit &record) {
       vec dir = record.casted_ray_direction;
       vec n = record.object_normal;

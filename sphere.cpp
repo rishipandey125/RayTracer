@@ -23,13 +23,13 @@ float sphere::hit_sphere(ray &casted_ray) {
   float b = 2 * casted_ray.direction.dot(ac);
   float c = ac.dot(ac) - (this->radius*this->radius);
   float discriminant = (b*b) - (4*a*c);
-  if (discriminant >= 0.0) {
+  if (discriminant > 0.0) {
     // both negative = no hit
     // both positive = hit from outside take the first one
     // one negative and one positive take the positve one (comes from inside)
     float t_first = ((-b-sqrt(discriminant))/(2*a));
     float t_second = ((-b+sqrt(discriminant))/(2*a));
-    if (t_first >= 0.01) {
+    if (t_first > 0.0) { //changed t_first > 0.01 to what exists now
       return t_first;
     } else if (t_second >= 0.01) {
       return t_second;
