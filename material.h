@@ -83,8 +83,7 @@ class dialectric: public material {
       base_color = color(1,1,1);
       refractive_index = r_i;
     }
-    //the bug has something to do with refraction - fix that and then it should work!
-
+    //the bug has something to do with refraction - fix that and then it should work!  
     virtual bool scatter(hit &record) {
       vec dir = record.casted_ray_direction;
       vec n = record.object_normal;
