@@ -19,15 +19,6 @@ vec refract(vec &v, vec &n, float ni_over_nt) {
   vec r_out_parallel = n * -1.0 * sqrt(fabs(1.0-(length*length)));
   return r_out_perp + r_out_parallel;
 }
-// bool refract(vec &v, vec &n, float ni_over_nt, vec &refracted) {
-//   float dot = v.dot(n);
-//   float disc = 1.0 - (ni_over_nt * ni_over_nt * (1-(dot*dot)));
-//   if (disc > 0) {
-//     refracted = ((v-(n*dot)) - (n*sqrt(disc))) * ni_over_nt;
-//     return true;
-//   }
-//   return false;
-// }
 
 float schlick(float cosine, float r_i) {
   float r0 = (1-r_i) / (1+r_i);
@@ -83,7 +74,7 @@ class dialectric: public material {
       base_color = color(1,1,1);
       refractive_index = r_i;
     }
-    //the bug has something to do with refraction - fix that and then it should work!  
+    //the bug has something to do with refraction - fix that and then it should work!
     virtual bool scatter(hit &record) {
       vec dir = record.casted_ray_direction;
       vec n = record.object_normal;
@@ -96,12 +87,13 @@ class dialectric: public material {
         ni_over_nt = 1.0/refractive_index;
       }
       float cosine = fmin(n.dot(dir*-1.0),1.0);
-      if (random_float() < schlick(cosine,refractive_index)) {
-        vec scatter = reflect(dir,n);
-        record.next_ray = ray(record.hit_point,scatter);
-        return true;
+      vec scatter;
+      float s = schlick(cosine,ni_over_nt);
+      if (random_float() < s) {
+        scatter = reflect(dir,n);
+      } else {
+        scatter = refract(dir,n,ni_over_nt);
       }
-      vec scatter = refract(dir,n,ni_over_nt);
       record.next_ray = ray(record.hit_point,scatter);
       return true;
      }
