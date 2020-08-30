@@ -94,7 +94,7 @@ int main() {
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 1;
+  int samples = 100;
   //Render Details (Iterate and Create Image)
   std::cout << "P3 \n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {
