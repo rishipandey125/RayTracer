@@ -39,7 +39,6 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
     record.random_unit_vec = random_unit_vector();
     record.object_normal = record.object->get_normal_vector(record.hit_point)*(1/(record.object->radius));
     record.casted_ray_direction = (casted_ray.direction);
-    // std::cout << casted_ray.direction.dot(record.object_normal) << std::endl;
     if (record.object->sphere_material->scatter(record)) {
       return trace(record.next_ray,objects,depth-1)*record.object->sphere_material->base_color;
     } else {
@@ -91,7 +90,7 @@ int main() {
   sphere center_sphere2(point(0.0,0.0,-1),-0.45,&glass_mat);
   sphere left_sphere(point(0,0.0,-6.0),0.5,&red_mat);
   sphere right_sphere(point(0.75,0.0,-2.0),0.5,&blue_mat);
-  std::vector <sphere> spheres = {world_sphere,center_sphere,left_sphere};
+  std::vector <sphere> spheres = {world_sphere,center_sphere,center_sphere2,left_sphere};
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
