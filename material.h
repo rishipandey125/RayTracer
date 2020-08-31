@@ -67,7 +67,7 @@ class metal: public material {
     float fuzz;
 };
 
-class dialectric: public material {
+class dielectric: public material {
   public:
     dialectric(float r_i) {
       base_color = color(1,1,1);
@@ -87,18 +87,20 @@ class dialectric: public material {
       }
       float cosine = fmin(n.dot(dir*-1.0),1.0);
       float sin =  sqrt(1.0-(cosine*cosine));
-      // if (ni_over_nt * sin > 1.0) {
-      //   vec reflect_vec = reflect(dir,n);
-      //   record.next_ray = ray(record.hit_point,reflect_vec);
-      //   return true;
-      // }
+      if (ni_over_nt * sin > 1.0) {
+        vec reflect_vec = reflect(dir,n);
+        record.next_ray = ray(record.hit_point,reflect_vec);
+        return true;
+      }
       //perfect refraction works. (mixing schlick doesnt!)
-      vec scatter = refract(dir,n,cosine,ni_over_nt);
-      // if (random_float() < schlick(cosine,refractive_index)) {
-      //   scatter = reflect(dir,n);
-      //   } else {
-      //   scatter = refract(dir,n,cosine,ni_over_nt);
-      // }
+      vec scatter;
+      float s = schlick(cosine,refractive_index);
+      std::cout << s << std::endl;
+      if (random_float() < s) {
+        scatter = reflect(dir,n);
+      } else {
+        scatter = refract(dir,n,cosine,ni_over_nt);
+      }
       record.next_ray = ray(record.hit_point,scatter);
       return true;
      }
