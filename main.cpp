@@ -68,10 +68,10 @@ void output_color(color &pixel, int samples) {
 
 int main() {
   //Initialize Camera
-  point camera_origin(0,0,0);
+  point camera_origin(0,0.8,0.1);
   point look_at(0,0,-1);
   float aspect_ratio = 16.0/9.0;
-  float vertical_fov = 90;
+  float vertical_fov = 60;
   float aperture = 0;
   camera cam(camera_origin,look_at, aspect_ratio,vertical_fov,aperture);
 
@@ -81,22 +81,25 @@ int main() {
   metal metal_mat(color(0.8,0.8,0.8),0.0);
   diffuse red_mat(color(1,0.0,0.0));
   diffuse blue_mat(color(0.0,0.0,1.0));
+  diffuse green_mat(color(0.0,1.0,0.0));
 
   dielectric glass_mat(1.5);
 
   //Initialize Spheres
   sphere world_sphere(point(0,-100.5,-1),100,&world_mat);
-  sphere center_sphere(point(0.0,0.0,-1),0.5,&glass_mat);
-  sphere center_sphere2(point(0.0,0.0,-1),-0.49,&glass_mat);
-  sphere left_sphere(point(0.0,0.0,-4),0.5,&red_mat);
-  sphere right_sphere(point(1.0,0.0,-1.5),0.5,&blue_mat);
-  std::vector <sphere> spheres = {world_sphere,center_sphere,left_sphere,right_sphere};
+  sphere center_sphere(point(0.0,0.0,-1.5),0.5,&glass_mat);
+  sphere center_sphere2(point(0.0,0.0,-1.5),-0.49,&glass_mat);
+  sphere left_sphere(point(-1.2,0.0,-3.0),0.5,&red_mat);
+  sphere right_sphere(point(1.2,0.0,-3.0),0.5,&metal_mat);
+  sphere front_sphere(point(0.7,-0.2,-1),0.3,&blue_mat);
+
+  std::vector <sphere> spheres = {world_sphere,center_sphere,center_sphere2,left_sphere,right_sphere,front_sphere};
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 1;
+  int samples = 100;
   //Render Details (Iterate and Create Image)
-  // std::cout << "P3 \n" << image_width << ' ' << image_height << "\n255\n";
+  std::cout << "P3 \n" << image_width << ' ' << image_height << "\n255\n";
     for (int j = image_height-1; j >= 0; j--) {
       for (int i = 0; i < image_width; i++) {
           color pixel;
@@ -107,7 +110,7 @@ int main() {
             ray cast_ray = cam.get_ray(u,v);
             pixel = pixel + trace(cast_ray,spheres,50);
           }
-        // output_color(pixel,samples);
+        output_color(pixel,samples);
       }
   }
   return 0;

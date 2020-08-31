@@ -69,7 +69,7 @@ class metal: public material {
 
 class dielectric: public material {
   public:
-    dialectric(float r_i) {
+    dielectric(float r_i) {
       base_color = color(1,1,1);
       refractive_index = r_i;
     }
@@ -85,7 +85,7 @@ class dielectric: public material {
       } else {
         ni_over_nt = 1.0/refractive_index;
       }
-      float cosine = fmin(n.dot(dir*-1.0),1.0);
+      float cosine = n.dot(dir*-1.0);
       float sin =  sqrt(1.0-(cosine*cosine));
       if (ni_over_nt * sin > 1.0) {
         vec reflect_vec = reflect(dir,n);
@@ -94,9 +94,8 @@ class dielectric: public material {
       }
       //perfect refraction works. (mixing schlick doesnt!)
       vec scatter;
-      float s = schlick(cosine,refractive_index);
-      std::cout << s << std::endl;
-      if (random_float() < s) {
+      //the middle band is caused by the reflection
+      if (random_float() < schlick(cosine,refractive_index)) {
         scatter = reflect(dir,n);
       } else {
         scatter = refract(dir,n,cosine,ni_over_nt);
