@@ -33,7 +33,7 @@ camera::camera(point c_origin, point look_at, float camera_aspect_ratio, float v
   this->lower_left_corner = c_origin - this->horizontal/scale - this->vertical/scale - (this->w*focus_distance);
   this->lens_radius = aperture/2.0;
 }
-
+//this is a comment i am adding
 //Generate Ray Based Off of UV Frame Location
 ray camera::get_ray(float &x_pos, float &y_pos) {
   vec lens = random_in_unit_disk() * this->lens_radius;
