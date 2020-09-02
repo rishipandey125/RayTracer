@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <fstream>
 #include <cmath>
 #include "vec.cpp"
 #include "ray.cpp"
@@ -54,20 +55,19 @@ color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
 }
 
 //Output Color Function
-void output_color(color &pixel, int samples) {
+color output_color(color &pixel, int samples) {
   float ratio = 1.0/float(samples);
   color output_pixel = pixel*ratio;
   //Gamma Correction gamma=2.0
   output_pixel.root();
   output_pixel.clamp();
-  int r = static_cast<int>(255 * output_pixel.x);
-  int g = static_cast<int>(255 * output_pixel.y);
-  int b = static_cast<int>(255 * output_pixel.z);
-  std::cout << r << ' ' << g << ' ' << b << '\n';
+  return output_pixel;
+  // std::cout << r << ' ' << g << ' ' << b << '\n' << std::endl;
 }
 
 void render_frame(camera &cam) {
-
+  std::ofstream ofs;
+  ofs.open("hello.ppm",std::ios::out | std::ios::binary);
   //Initialize Materials
   diffuse world_mat(color(0.2,0.2,0.2));
   metal metal_mat_fuzz(color(0.8,0.8,0.8),0.3);
@@ -95,7 +95,7 @@ void render_frame(camera &cam) {
   int image_height = (int)(image_width/cam.aspect_ratio);
   int samples = 1;
   //Render Details (Iterate and Create Image)
-  std::cout << "P3 \n" << image_width << ' ' << image_height << "\n255\n";
+  ofs << "P3 \n" << image_width << ' ' << image_height << "\n255\n" << std::endl;
     for (int j = image_height-1; j >= 0; j--) {
       for (int i = 0; i < image_width; i++) {
           color pixel;
@@ -106,7 +106,12 @@ void render_frame(camera &cam) {
             ray cast_ray = cam.get_ray(u,v);
             pixel = pixel + trace(cast_ray,spheres,50);
           }
-        output_color(pixel,samples);
+        color output = output_color(pixel,samples);
+        int r = static_cast<int>(255 * output.x);
+        int g = static_cast<int>(255 * output.y);
+        int b = static_cast<int>(255 * output.z);
+        ofs << r << ' ' << g << ' '<< b << std::endl;
       }
   }
+  ofs.close();
 }
