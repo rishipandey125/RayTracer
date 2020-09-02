@@ -8,6 +8,7 @@ int main() {
   float vertical_fov = 60;
   float aperture = 0;
   camera cam(camera_origin,look_at, aspect_ratio,vertical_fov,aperture);
-  render_frame(cam);
+  render_frame(cam,"hello.ppm");
+  render_frame(cam,"hello2.ppm");
   return 0;
 }
