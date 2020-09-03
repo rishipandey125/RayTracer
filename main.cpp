@@ -16,7 +16,7 @@ int main() {
     std::ostringstream num;
     frame_num += 1;
     num<<frame_num;
-    std::string frame_name = folder_name+"frame"+num .str()+".ppm";
+    std::string frame_name = folder_name+num.str()+".ppm";
     float vfov = start_fov - ((start_fov-end_fov)*(float(x)/72.0));
     camera cam(camera_origin,look_at, aspect_ratio,vfov,aperture);
     render_frame(cam,frame_name);
