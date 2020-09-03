@@ -5,18 +5,20 @@ images_path = "/Users/rishipandey125/Desktop/RayTracedContent/"
 directory = os.fsencode(images_path)
 height = 0
 width = 0
+
 for file in os.listdir(directory):
     filename = os.fsdecode(file)
     if filename.endswith(".ppm"):
         img = cv2.imread(images_path+filename)
         height, width, layers = img.shape;
-        break
+        print(filename)
 
 video = cv2.VideoWriter(images_path+"video.avi", 0, 24, (width,height))
 
 for file in os.listdir(directory):
      filename = os.fsdecode(file)
      if filename.endswith(".ppm"):
+         print(filename) #file names OUT OF ORDER
          img = cv2.imread(images_path+filename)
          video.write(img)
          os.remove(images_path+filename)
