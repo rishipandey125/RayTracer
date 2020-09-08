@@ -1,6 +1,27 @@
 #include "camera.h"
 #include <cmath>
 #include "random.cpp"
+
+void camera::update_frame_settings() {
+  float theta = this->vertical_fov*(M_PI/180.0);
+  float h = tan(theta/2.0);
+  vec vup(0,1,0);
+  //apeture disk
+  this->w = this->origin - this->look_at; this->w.unit();
+  this->u = vup.cross(this->w); this->u.unit();
+  this->v = this->w.cross(this->u);
+  float focus_distance = vec(this->origin-this->look_at).length();
+  float viewport_height = 2.0 * h;
+  float viewport_width = viewport_height*this->aspect_ratio;
+  this->horizontal = this->u*focus_distance*viewport_width;
+  this->vertical = this->v*focus_distance*viewport_height;
+  this->focal_length = 1.0;
+  float scale = 2.0;
+  this->lower_left_corner = this->origin - this->horizontal/scale - this->vertical/scale - (this->w*focus_distance);
+  this->lens_radius = this->apeture/2.0;
+}
+
+
 /*
 Animated Camera Features: Moveable Camera (Changing c_origin around the look_at), static look_at, focusing feature (change aperture)
 zoom feature (changing vfov)
@@ -12,27 +33,20 @@ capture_complete bool parameter
 */
 //Camera Class
 //Camera Constructor
-camera::camera(point c_origin, point look_at, float camera_aspect_ratio, float vfov, float aperture, int c_length) {
+camera::camera(point c_origin, point l_at, float camera_aspect_ratio,
+              float s_fov, float e_fov,
+              float s_apeture, float e_apeture,
+              int total_frames) {
   this->origin = c_origin;
+  this->look_at = l_at;
   this->aspect_ratio = camera_aspect_ratio;
-  this->capture_length = c_length;
-  //fov
-  float theta = vfov*(M_PI/180.0);
-  float h = tan(theta/2.0);
-  vec vup(0,1,0);
-  //apeture disk
-  this->w = c_origin - look_at; this->w.unit();
-  this->u = vup.cross(this->w); this->u.unit();
-  this->v = this->w.cross(this->u);
-  float focus_distance = vec(c_origin-look_at).length();
-  float viewport_height = 2.0 * h;
-  float viewport_width = viewport_height*this->aspect_ratio;
-  this->horizontal = this->u*focus_distance*viewport_width;
-  this->vertical = this->v*focus_distance*viewport_height;
-  this->focal_length = 1.0;
-  float scale = 2.0;
-  this->lower_left_corner = c_origin - this->horizontal/scale - this->vertical/scale - (this->w*focus_distance);
-  this->lens_radius = aperture/2.0;
+  this->start_apeture = s_apeture;
+  this->end_apeture = e_apeture;
+  this->start_fov = s_fov;
+  this->end_fov = e_fov;
+  this->num_frames = total_frames;
+  this->frame_count = 0;
+  this->capture_complete = false;
 }
 //this is a comment i am adding
 //Generate Ray Based Off of UV Frame Location
@@ -48,9 +62,9 @@ void camera::next_capture() {
    float r = float(frame_count)/float(num_frames);
    //update origin
    //update apeture
-   this->apeture = this->start_apeture - ((this->start_apeture-this->end_aperture)*r;
+   this->apeture = this->start_apeture - ((this->start_apeture-this->end_apeture)*r);
    //update fov
-   this->v_fov = this->start_fov - ((this->start_fov-this->end_fov)*r;
+   this->vertical_fov = this->start_fov - ((this->start_fov-this->end_fov)*r);
    //update frame_settings
    update_frame_settings();
    //update frame_count
@@ -58,8 +72,4 @@ void camera::next_capture() {
    if (this->frame_count == this->num_frames) {
      this->capture_complete = true;
    }
-}
-
-void update_frame_settings() {
-
 }

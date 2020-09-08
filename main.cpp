@@ -6,19 +6,15 @@ int main() {
   point look_at(0,0,-1);
   float aspect_ratio = 16.0/9.0;
   float start_fov = 90;
+  float end_fov = 60;
   float aperture = 0;
+  int total_frames = 72;
+  camera cam(camera_origin,look_at,aspect_ratio,start_fov,end_fov,apeture,apeture,total_frames);
 
   std::string folder_name = "/Users/rishipandey125/Desktop/RayTracedContent/";
-
-  int frame_num = 0;
-  float end_fov = 60;
-  for (int x = 0; x < 72; x++) {
+  while (!(cam.capture_complete)) {
     std::ostringstream num;
-    frame_num += 1;
-    num<<frame_num;
-    std::string frame_name = folder_name+num.str()+".ppm";
-    float vfov = start_fov - ((start_fov-end_fov)*(float(x)/72.0));
-    camera cam(camera_origin,look_at, aspect_ratio,vfov,aperture);
+    num<<cam.frame_count;
     render_frame(cam,frame_name);
   }
   return 0;
