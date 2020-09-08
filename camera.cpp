@@ -2,13 +2,8 @@
 #include <cmath>
 #include "random.cpp"
 /*
-Here is how the disk DOF works: for every point in the disk - treat that like a pinhole camera.
-That means you have a ton of pinhole cameras in a disk. Each pinhole camera can shoot rays and create an image.
-If those images are averaged together then everything - but the thing in the focus point will be out of focus.
-This is because we are looking at objects from different views a bunch of times and then averaging those views.
-This is what causes the blurriness. There is only one thing in focus because all the pinhole cameras are told to look at
-one thing. This Allows us to create a depth of field. The larger the apeture (lower the f-stop) the more pinhole cameras
-you have. This means that there will be a higher depth of field because things not in focus will be blurrier.
+Animated Camera Features: Moveable Camera (Changing c_origin around the look_at), static look_at, focusing feature (change aperture)
+zoom feature (changing vfov)
 */
 //Camera Class
 //Camera Constructor
