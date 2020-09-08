@@ -32,6 +32,6 @@ for file in sorted_file_list:
     if filename.endswith(".ppm"):
         img = cv2.imread(images_path+filename)
         video.write(img)
-        os.remove(images_path+filename)
+        # os.remove(images_path+filename)
 
 print("Video Stitching Complete")
