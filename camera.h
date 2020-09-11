@@ -15,7 +15,7 @@ class camera {
     void update_frame_settings();
     point origin;
     point look_at;
-    ray camer_path;
+    ray camera_path;
     float path;
     float aspect_ratio;
     float focal_length;
