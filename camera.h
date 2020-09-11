@@ -6,7 +6,7 @@
 //Camera Class Header
 class camera {
   public:
-    camera(point c_origin, point l_at, float camera_aspect_ratio,
+    camera(point s_point, point e_point, point l_at, float camera_aspect_ratio,
                   float s_fov, float e_fov,
                   float s_apeture, float e_apeture,
                   int total_frames);
@@ -15,6 +15,8 @@ class camera {
     void update_frame_settings();
     point origin;
     point look_at;
+    ray camer_path;
+    float path;
     float aspect_ratio;
     float focal_length;
     float vertical_fov;

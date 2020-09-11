@@ -33,11 +33,15 @@ capture_complete bool parameter
 */
 //Camera Class
 //Camera Constructor
-camera::camera(point c_origin, point l_at, float camera_aspect_ratio,
+camera::camera(point s_point, point e_point, point l_at, float camera_aspect_ratio,
               float s_fov, float e_fov,
               float s_apeture, float e_apeture,
               int total_frames) {
-  this->origin = c_origin;
+  this->origin = s_point;
+  //create a ray at the
+  vec direction = e_point-s_point;
+  this->camera_path = ray(s_point,direction);
+  this->path = direction.length();
   this->look_at = l_at;
   this->aspect_ratio = camera_aspect_ratio;
   this->start_apeture = s_apeture;
@@ -61,6 +65,7 @@ ray camera::get_ray(float &x_pos, float &y_pos) {
 void camera::next_capture() {
    float r = float(frame_count)/float(num_frames);
    //update origin
+   this->origin = this->camera_path.get_point_at(r*this->path);
    //update apeture
    this->apeture = this->start_apeture - ((this->start_apeture-this->end_apeture)*r);
    //update fov
