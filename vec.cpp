@@ -8,7 +8,7 @@ vec::vec() {
   this->x = 0.0f; this->y = 0.0f; this->z = 0.0f;
 }
 
-// Specific Constructor
+// Specific Constructor 3D Vector
 vec::vec(float i, float j, float k) {
   this->x = i;
   this->y = j;
@@ -33,6 +33,7 @@ float vec::dot(const vec &vector) {
   return (this->x*vector.x) + (this->y*vector.y) + (this->z*vector.z);
 }
 
+//Cross Product
 vec vec::cross(const vec &vector) {
   float x = (this->y*vector.z)-(this->z*vector.y);
   float y = -1.0 * ((this->x*vector.z)-(this->z*vector.x));
@@ -40,37 +41,46 @@ vec vec::cross(const vec &vector) {
   return vec(x,y,z);
 }
 
+//Add Operator
 vec vec::operator+(const vec &vector) {
   return vec(this->x + vector.x, this->y + vector.y, this->z + vector.z);
 }
 
+//Equal Operator
 void vec::operator=(const vec &vector) {
   this->x = vector.x;
   this->y = vector.y;
   this->z = vector.z;
 }
 
+//Minus Operator
 vec vec::operator-(const vec &vector) {
   return vec(this->x - vector.x, this->y - vector.y, this->z - vector.z);
 }
+
+//Multiplier Operator (vec*vec)
 vec vec::operator*(const vec &vector) {
   return vec(this->x * vector.x, this->y * vector.y, this->z * vector.z);
 }
 
+//Multiplier Operator (vec*scalar)
 vec vec::operator*(const float &scalar) {
   return vec(this->x * scalar, this->y * scalar, this->z * scalar);
 }
 
+//Divison Operator (vec/scalar)
 vec vec::operator/(const float &scalar) {
   return vec(this->x / scalar, this->y / scalar, this->z / scalar);
 }
 
+//Comparison Operator
 bool vec::operator==(const vec&vector) {
   if (this->x == vector.x && this->y == vector.y && this->z == vector.z) {
     return true;
   }
   return false;
 }
+
 //Clamping Color on RGB Scale
 void vec::clamp() {
   if (this->x > 1) {

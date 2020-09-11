@@ -32,7 +32,6 @@ class camera {
     vec lower_left_corner;
     vec horizontal, vertical;
     vec u, v, w;
-
 };
 
 #endif

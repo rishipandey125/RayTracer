@@ -1,7 +1,12 @@
 #include "camera.h"
 #include <cmath>
 #include "random.cpp"
+/*
+Camera Class
+Features: Moving Camera, Apeture, and FOV Control
+*/
 
+//Updating Frame Settings Every Frame
 void camera::update_frame_settings() {
   float theta = this->vertical_fov*(M_PI/180.0);
   float h = tan(theta/2.0);
@@ -21,24 +26,12 @@ void camera::update_frame_settings() {
   this->lens_radius = this->apeture/2.0;
 }
 
-
-/*
-Animated Camera Features: Moveable Camera (Changing c_origin around the look_at), static look_at, focusing feature (change aperture)
-zoom feature (changing vfov)
-capture length
-start point - end point
-start fov - end fov
-start apeture - end apeture
-capture_complete bool parameter
-*/
-//Camera Class
 //Camera Constructor
 camera::camera(point s_point, point e_point, point l_at, float camera_aspect_ratio,
               float s_fov, float e_fov,
               float s_apeture, float e_apeture,
               int total_frames) {
   this->origin = s_point;
-  //create a ray at the
   vec direction = e_point-s_point;
   this->camera_path = ray(s_point,direction);
   this->path = direction.length();
@@ -52,7 +45,7 @@ camera::camera(point s_point, point e_point, point l_at, float camera_aspect_rat
   this->frame_count = 0;
   this->capture_complete = false;
 }
-//this is a comment i am adding
+
 //Generate Ray Based Off of UV Frame Location
 ray camera::get_ray(float &x_pos, float &y_pos) {
   vec lens = random_in_unit_disk() * this->lens_radius;
@@ -61,7 +54,7 @@ ray camera::get_ray(float &x_pos, float &y_pos) {
             this->lower_left_corner + (this->horizontal*x_pos) + (this->vertical*y_pos) - this->origin - offset);
 }
 
-//updates all the parameters and sets the lower_left_corner viewport iteration pattern
+//Updates all the parameters and sets the lower_left_corner viewport iteration pattern for each capture
 void camera::next_capture() {
    float r = float(frame_count)/float(num_frames);
    //update origin

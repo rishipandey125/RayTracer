@@ -4,7 +4,7 @@
 //Default Constructor
 ray::ray() {}
 
-//Specific Constructor
+//Specific Constructor (Origin and Direction)
 ray::ray(const point &ray_origin, const vec &ray_direction) {
   this->origin = ray_origin;
   this->direction = ray_direction;

@@ -10,7 +10,7 @@
 #include "material.h"
 #include "hit.h"
 #include "random.cpp"
-
+//RENDER CPP FILE
 /*
 Traces Ray through the Scene
 @param casted_ray: ray casted from camera through viewport
@@ -18,7 +18,6 @@ Traces Ray through the Scene
 @param depth: number of bounces for ray tracing
 */
 
-//shadows need to be fixed - they are working like materials THIS IS NOT RIGHT
 color trace(ray casted_ray, std::vector <sphere> objects, int depth) {
   if (depth <= 0) {
     return color(0,0,0);
@@ -62,12 +61,12 @@ color output_color(color &pixel, int samples) {
   output_pixel.root();
   output_pixel.clamp();
   return output_pixel;
-  // std::cout << r << ' ' << g << ' ' << b << '\n' << std::endl;
 }
 
 void render_frame(camera &cam,std::string file_name) {
   std::ofstream ofs;
   ofs.open(file_name,std::ios::out | std::ios::binary);
+  
   //Initialize Materials
   diffuse world_mat(color(0.2,0.2,0.2));
   metal metal_mat_fuzz(color(0.8,0.8,0.8),0.3);
@@ -75,12 +74,8 @@ void render_frame(camera &cam,std::string file_name) {
   diffuse red_mat(color(1,0.0,0.0));
   diffuse blue_mat(color(0.0,0.0,1.0));
   diffuse green_mat(color(0.0,1.0,0.0));
-
   dielectric glass_mat(1.5);
-  /*
-  Creating the Animation System: Start with Changing just one paramter like fov
-  and get the images stiched into a video.
-  */
+
   //Initialize Spheres
   sphere world_sphere(point(0,-100.5,-1),100,&world_mat);
   sphere center_sphere(point(0.0,0.0,-1.5),0.5,&glass_mat);

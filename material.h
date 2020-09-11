@@ -5,7 +5,10 @@
 #include "hit.h"
 #include "random.cpp"
 #include <cmath>
-
+/*
+Material Class
+Materials: Glass, Metal, and Diffuse
+*/
 vec reflect(vec &v, vec &n) {
   float product = v.dot(n)*2.0;
   vec reflect = v - (n*product);

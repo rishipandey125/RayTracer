@@ -1,7 +1,7 @@
 import os
 import cv2
 images_path = "/Users/rishipandey125/Desktop/RayTracedContent/"
-
+#Python Script for Stitching Rendered Frames into Video
 directory = os.fsencode(images_path)
 height = 0
 width = 0
