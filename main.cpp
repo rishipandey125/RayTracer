@@ -22,6 +22,7 @@ int main() {
 
   //Capture and Render Frames
   std::string folder_name = "/Users/rishipandey125/Desktop/RayTracedContent/";
+  bool single_capture = true;
   while (!(cam.capture_complete)) {
     cam.next_capture();
     std::ostringstream num;
@@ -29,6 +30,9 @@ int main() {
     //frame count never updating
     std::string frame_name = folder_name+num.str()+".ppm";
     render_frame(cam,frame_name);
+    if (single_capture) {
+      break;
+    }
   }
   return 0;
 }
