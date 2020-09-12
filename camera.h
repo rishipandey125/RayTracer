@@ -16,11 +16,9 @@ class camera {
     //Camera Origin
     point origin;
     ray camera_path;
-    float path;
     //Focusing
     point look_at;
     ray focus_ray;
-    float focus_path;
     //Apeture/Focus
     float apeture;
     float start_apeture;
