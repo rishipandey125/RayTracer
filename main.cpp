@@ -16,8 +16,8 @@ int main() {
   float aspect_ratio = 16.0/9.0;
   float start_fov = 90;
   float end_fov = 90;
-  float start_apeture = 0.0;
-  float end_apeture = 0.0;
+  float start_apeture = 2.0;
+  float end_apeture = 2.0;
   int total_frames = 72;
   camera cam(camera_start,camera_end,look_at_start,look_at_end,
             aspect_ratio,start_fov,end_fov,start_apeture,
