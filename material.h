@@ -95,9 +95,7 @@ class dielectric: public material {
         record.next_ray = ray(record.hit_point,reflect_vec);
         return true;
       }
-      //perfect refraction works. (mixing schlick doesnt!)
       vec scatter;
-      //the middle band is caused by the reflection
       if (random_float() < schlick(cosine,refractive_index)) {
         scatter = reflect(dir,n);
       } else {

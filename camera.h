@@ -6,28 +6,33 @@
 //Camera Class Header
 class camera {
   public:
-    camera(point s_point, point e_point, point l_at, point l_at_end, float camera_aspect_ratio,
-                  float s_fov, float e_fov,
-                  float s_apeture, float e_apeture,
-                  int total_frames);
+    camera(point s_point, point e_point, point l_at, point l_at_end,
+          float camera_aspect_ratio, float s_fov, float e_fov,
+          float s_apeture, float e_apeture, int total_frames);
     ray get_ray(float &x_pos, float &y_pos);
     void next_capture();
     void update_frame_settings();
+    //Class Variables
+    //Camera Origin
     point origin;
-    point look_at;
     ray camera_path;
     float path;
+    //Focusing
+    point look_at;
     ray focus_ray;
     float focus_path;
-    float aspect_ratio;
-    float focal_length;
-    float vertical_fov;
+    //Apeture/Focus
     float apeture;
     float start_apeture;
     float end_apeture;
+    float lens_radius;
+    //FOV
+    float vertical_fov;
     float start_fov;
     float end_fov;
-    float lens_radius;
+    //Camera Info
+    float aspect_ratio;
+    float focal_length;
     int frame_count;
     int num_frames;
     bool capture_complete;

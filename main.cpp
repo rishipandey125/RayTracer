@@ -29,7 +29,6 @@ int main() {
     cam.next_capture();
     std::ostringstream num;
     num<<cam.frame_count;
-    //frame count never updating
     std::string frame_name = folder_name+num.str()+".ppm";
     render_frame(cam,frame_name);
     //single capture
