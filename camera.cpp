@@ -27,7 +27,7 @@ void camera::update_frame_settings() {
 }
 
 //Camera Constructor
-camera::camera(point s_point, point e_point, point l_at, float camera_aspect_ratio,
+camera::camera(point s_point, point e_point, point l_at, point l_at_end,float camera_aspect_ratio,
               float s_fov, float e_fov,
               float s_apeture, float e_apeture,
               int total_frames) {
@@ -36,6 +36,9 @@ camera::camera(point s_point, point e_point, point l_at, float camera_aspect_rat
   this->camera_path = ray(s_point,direction);
   this->path = direction.length();
   this->look_at = l_at;
+  vec focus_direction = l_at_end-l_at;
+  this->focus_ray = ray(l_at,focus_direction);
+  this->focus_path = focus_direction.length();
   this->aspect_ratio = camera_aspect_ratio;
   this->start_apeture = s_apeture;
   this->end_apeture = e_apeture;
@@ -59,6 +62,8 @@ void camera::next_capture() {
    float r = float(frame_count)/float(num_frames);
    //update origin
    this->origin = this->camera_path.get_point_at(r*this->path);
+   //update look_at
+   this->look_at = this->focus_ray.get_point_at(r*this->focus_path);
    //update apeture
    this->apeture = this->start_apeture - ((this->start_apeture-this->end_apeture)*r);
    //update fov

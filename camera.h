@@ -17,6 +17,8 @@ class camera {
     point look_at;
     ray camera_path;
     float path;
+    ray focus_ray;
+    float focus_path;
     float aspect_ratio;
     float focal_length;
     float vertical_fov;
