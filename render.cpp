@@ -66,7 +66,7 @@ color output_color(color &pixel, int samples) {
 void render_frame(camera &cam,std::string file_name) {
   std::ofstream ofs;
   ofs.open(file_name,std::ios::out | std::ios::binary);
-  
+
   //Initialize Materials
   diffuse world_mat(color(0.2,0.2,0.2));
   metal metal_mat_fuzz(color(0.8,0.8,0.8),0.3);
