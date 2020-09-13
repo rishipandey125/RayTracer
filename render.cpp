@@ -68,44 +68,41 @@ void render_frame(camera &cam,std::string file_name) {
   ofs.open(file_name,std::ios::out | std::ios::binary);
 
   //Initialize Materials
-  diffuse world_mat(color(0.8,0.8,1.0));
-  // metal copper(color(0.78,0.46,0.2),0.3);
+  diffuse world_mat(color(0.8,0.8,0.8));
+  metal copper(color(0.78,0.46,0.2),0.3);
   metal metal_mat(color(0.8,0.8,0.8),0.0);
-  diffuse first(color(.2,.4,1));
-  diffuse second(color(0.4,0.3,0.85));
-  diffuse third(color(0.56,0.22,0.73));
-  diffuse fourth(color(0.68,0.15,0.62));
-  diffuse fifth(color(0.8,0.1,0.55));
+  diffuse first(color(1,0,0));
+  diffuse second(color(0,0,1));
   dielectric glass_mat(1.5);
 
   //Initialize Spheres
   sphere world(point(0,-100.5,-1),100,&world_mat);
-  sphere center(point(0.0,0.0,-10),0.5,&metal_mat);
-  sphere right(point(1.0,0.0,-9),0.5,&first);
-  sphere left(point(-1.0,0.0,-9),0.5,&first);
-  sphere right2(point(1.0,0.0,-8),0.5,&second);
-  sphere left2(point(-1.0,0.0,-8),0.5,&second);
-  sphere right3(point(1.0,0.0,-7),0.5,&third);
-  sphere left3(point(-1.0,0.0,-7),0.5,&third);
-  sphere right4(point(1.0,0.0,-6),0.5,&fourth);
-  sphere left4(point(-1.0,0.0,-6),0.5,&fourth);
-  sphere right5(point(1.0,0.0,-5),0.5,&fifth);
-  sphere left5(point(-1.0,0.0,-5),0.5,&fifth);
-  sphere right6(point(1.0,0.0,-4),0.5,&glass_mat);
-  sphere right6_inside(point(1.0,0.0,-4),-0.49,&glass_mat);
-  sphere left6(point(-1.0,0.0,-4),0.5,&glass_mat);
-  sphere left6_inside(point(-1.0,0.0,-4),-0.49,&glass_mat);
+  sphere center(point(0.0,0.0,-2),0.5,&copper);
+  sphere right(point(1.5,0.0,-3),0.5,&first);
+  sphere left(point(-0.7,0.0,-1),0.5,&second);
+  // sphere right2(point(1.0,0.0,-8),0.5,&second);
+  // sphere left2(point(-1.0,0.0,-8),0.5,&second);
+  // sphere right3(point(1.0,0.0,-7),0.5,&third);
+  // sphere left3(point(-1.0,0.0,-7),0.5,&third);
+  // sphere right4(point(1.0,0.0,-6),0.5,&fourth);
+  // sphere left4(point(-1.0,0.0,-6),0.5,&fourth);
+  // sphere right5(point(1.0,0.0,-5),0.5,&fifth);
+  // sphere left5(point(-1.0,0.0,-5),0.5,&fifth);
+  // sphere right6(point(1.0,0.0,-4),0.5,&glass_mat);
+  // sphere right6_inside(point(1.0,0.0,-4),-0.49,&glass_mat);
+  // sphere left6(point(-1.0,0.0,-4),0.5,&glass_mat);
+  // sphere left6_inside(point(-1.0,0.0,-4),-0.49,&glass_mat);
 
   // sphere center_sphere2(point(0.0,0.0,-1.5),-0.49,&glass_mat);
   // sphere left_sphere(point(-1.2,0.0,-3.0),0.5,&red_mat);
   // sphere right_sphere(point(1.2,0.0,-3.0),0.5,&metal_mat);
   // sphere front_sphere(point(0.7,-0.2,-1),0.3,&blue_mat);
 
-  std::vector <sphere> spheres = {world,center,left,right,left2,right2,left3,right3,left4,right4,left5,right5,left6,left6_inside,right6,right6_inside};
+  std::vector <sphere> spheres = {world,center,right,left};
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 100;
+  int samples = 1;
   //Render Details (Iterate and Create Image)
   ofs << "P3 \n" << image_width << ' ' << image_height << "\n255\n" << std::endl;
     for (int j = image_height-1; j >= 0; j--) {
