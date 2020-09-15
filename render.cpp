@@ -69,17 +69,17 @@ void render_frame(camera &cam,std::string file_name) {
 
   //Initialize Materials
   diffuse world_mat(color(0.8,0.8,0.8));
-  metal copper(color(0.78,0.46,0.2),0.3);
-  metal metal_mat(color(0.8,0.8,0.8),0.0);
-  diffuse first(color(1,0,0));
+  metal gold(color(0.78,0.46,0.2),0.7);
+  // metal metal_mat(color(0.8,0.8,0.8),0.0);
+  diffuse first(color(.5,0,0));
   diffuse second(color(0,0,1));
-  dielectric glass_mat(1.5);
+  // dielectric glass_mat(1.5);
 
   //Initialize Spheres
   sphere world(point(0,-100.5,-1),100,&world_mat);
-  sphere center(point(0.0,0.0,-2),0.5,&copper);
-  sphere right(point(1.5,0.0,-3),0.5,&first);
-  sphere left(point(-0.7,0.0,-1),0.5,&second);
+  sphere center(point(0.0,0.0,-1),0.5,&gold);
+  sphere right(point(1,0.0,-1),0.5,&first);
+  sphere left(point(-1,0.0,-1),0.5,&first);
   // sphere right2(point(1.0,0.0,-8),0.5,&second);
   // sphere left2(point(-1.0,0.0,-8),0.5,&second);
   // sphere right3(point(1.0,0.0,-7),0.5,&third);
