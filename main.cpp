@@ -9,8 +9,8 @@ Render Frames
 
 int main() {
   //Camera Parameters
-  point camera_start(3.0,3,2);
-  point camera_end(3.0,3,2);
+  point camera_start(3,3,2);
+  point camera_end(3,3,2);
   point look_at(0,0.0,-1);
   float aspect_ratio = 16.0/9.0;
   float start_fov = 20;
