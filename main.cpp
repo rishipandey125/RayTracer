@@ -11,16 +11,15 @@ int main() {
   //Camera Parameters
   point camera_start(0,0,0);
   point camera_end(0,0,0);
-  point look_at_start(-0.7,0.0,-1);
-  point look_at_end(1.5,0.0,-3);
+  point look_at(0,0.0,-1);
   float aspect_ratio = 16.0/9.0;
   float start_fov = 90;
   float end_fov = 90;
   float start_apeture = 1.0;
   float end_apeture = 1.0;
   int total_frames = 96;
-  camera cam(camera_start,camera_end,look_at_start,look_at_end,
-            aspect_ratio,start_fov,end_fov,start_apeture,
+  camera cam(camera_start,camera_end,look_at,aspect_ratio,
+            start_fov,end_fov,start_apeture,
             end_apeture,total_frames);
 
   //Capture and Render Frames

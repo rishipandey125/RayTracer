@@ -35,8 +35,6 @@ camera::camera(point s_point, point e_point, point l_at, point l_at_end,float ca
   vec direction = e_point-s_point;
   this->camera_path = ray(s_point,direction);
   this->look_at = l_at;
-  vec focus_direction = l_at_end-l_at;
-  this->focus_ray = ray(l_at,focus_direction);
   this->aspect_ratio = camera_aspect_ratio;
   this->start_apeture = s_apeture;
   this->end_apeture = e_apeture;
@@ -60,8 +58,6 @@ void camera::next_capture() {
    float r = float(frame_count)/float(num_frames);
    //update origin
    this->origin = this->camera_path.get_point_at(r);
-   //update look_at
-   this->look_at = this->focus_ray.get_point_at(r);
    //update apeture
    this->apeture = this->start_apeture - ((this->start_apeture-this->end_apeture)*r);
    //update fov

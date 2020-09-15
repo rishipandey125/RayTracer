@@ -6,7 +6,7 @@
 //Camera Class Header
 class camera {
   public:
-    camera(point s_point, point e_point, point l_at, point l_at_end,
+    camera(point s_point, point e_point, point l_at,
           float camera_aspect_ratio, float s_fov, float e_fov,
           float s_apeture, float e_apeture, int total_frames);
     ray get_ray(float &x_pos, float &y_pos);
@@ -18,7 +18,6 @@ class camera {
     ray camera_path;
     //Focusing
     point look_at;
-    ray focus_ray;
     //Apeture/Focus
     float apeture;
     float start_apeture;
