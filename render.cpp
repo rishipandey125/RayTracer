@@ -81,6 +81,8 @@ void render_frame(camera &cam,std::string file_name) {
   sphere center_inside(point(0.0,0.0,-1),-0.49,&glass_mat);
   sphere right(point(1,0.0,-2),0.5,&first);
   sphere left(point(-1,0.0,-2),0.5,&first);
+  sphere right2(point(0.8,0.0,-3),0.5,&second);
+  sphere left2(point(-0.8,0.0,-3),0.5,&second);
   // sphere right2(point(1.0,0.0,-8),0.5,&second);
   // sphere left2(point(-1.0,0.0,-8),0.5,&second);
   // sphere right3(point(1.0,0.0,-7),0.5,&third);
@@ -99,7 +101,7 @@ void render_frame(camera &cam,std::string file_name) {
   // sphere right_sphere(point(1.2,0.0,-3.0),0.5,&metal_mat);
   // sphere front_sphere(point(0.7,-0.2,-1),0.3,&blue_mat);
 
-  std::vector <sphere> spheres = {world,center,center_inside,right,left};
+  std::vector <sphere> spheres = {world,center,center_inside,right,left,right2,left2};
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);

@@ -9,12 +9,14 @@ Render Frames
 
 int main() {
   //vertigo effect (start zoomed in) and end all the way zoomed out
+  // fov = tan-1(w/(2*d))
+  // w = 1.154700538 (calc the distance for each new fov, and set that)
   //Camera Parameters
-  point camera_start(0,0,10);
+  point camera_start(0,0,5.6);
   point camera_end(0,0,0);
   point look_at(0,0.0,-1);
   float aspect_ratio = 16.0/9.0;
-  float start_fov = 20;
+  float start_fov = 10;
   float end_fov = 60;
   float start_apeture = 0.0;
   float end_apeture = 0.0;
@@ -36,10 +38,6 @@ int main() {
     //   render_frame(cam,frame_name);
     // }
     //single capture first
-    // if (true) {
-    //   render_frame(cam,frame_name);
-    //   break;
-    // }
   }
   return 0;
 }
