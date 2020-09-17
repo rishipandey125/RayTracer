@@ -8,15 +8,16 @@ Render Frames
 #include <sstream>
 
 int main() {
+  //vertigo effect (start zoomed in) and end all the way zoomed out
   //Camera Parameters
-  point camera_start(3,3,2);
-  point camera_end(3,3,2);
+  point camera_start(0,0,10);
+  point camera_end(0,0,0);
   point look_at(0,0.0,-1);
   float aspect_ratio = 16.0/9.0;
   float start_fov = 20;
-  float end_fov = 20;
+  float end_fov = 60;
   float start_apeture = 0.0;
-  float end_apeture = 3.0;
+  float end_apeture = 0.0;
   int total_frames = 72;
   camera cam(camera_start,camera_end,look_at,aspect_ratio,
             start_fov,end_fov,start_apeture,
@@ -34,7 +35,7 @@ int main() {
     // if (cam.frame_count == cam.num_frames) {
     //   render_frame(cam,frame_name);
     // }
-    // //single capture first
+    //single capture first
     // if (true) {
     //   render_frame(cam,frame_name);
     //   break;
