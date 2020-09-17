@@ -58,10 +58,18 @@ void camera::next_capture() {
    float r = float(frame_count)/float(num_frames);
    //update origin
    this->origin = this->camera_path.get_point_at(r);
+   std::cout << "Distance: " << this->origin.z << std::endl;
    //update apeture
    this->apeture = this->start_apeture - ((this->start_apeture-this->end_apeture)*r);
    //update fov
    this->vertical_fov = this->start_fov - ((this->start_fov-this->end_fov)*r);
+   /*
+   Calculating distance based on vfov
+   1.154700538/(2*tan(theta/2.0))
+   */
+   float val = 1.154700538/(2*tan(theta/2.0));
+   std::cout << "Fov: " << this->vertical_fov << std::endl;
+   std::cout << "Actual Distance: " << val << std::endl;
    //update frame_settings
    update_frame_settings();
    //update frame_count

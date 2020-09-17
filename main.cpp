@@ -9,7 +9,7 @@ Render Frames
 
 int main() {
   //vertigo effect (start zoomed in) and end all the way zoomed out
-  // fov = tan-1(w/(2*d))
+  // d = w/(2*tan(fov/2))
   // w = 1.154700538 (calc the distance for each new fov, and set that)
   //Camera Parameters
   point camera_start(0,0,5.6);
