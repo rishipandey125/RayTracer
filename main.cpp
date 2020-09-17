@@ -38,6 +38,9 @@ int main() {
     //   render_frame(cam,frame_name);
     // }
     //single capture first
+    // if (true) {
+    //   render_frame(cam,frame_name);
+    // }
   }
   return 0;
 }
