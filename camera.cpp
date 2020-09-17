@@ -64,15 +64,12 @@ void camera::next_capture() {
 
    //update fov
    this->vertical_fov = this->start_fov - ((this->start_fov-this->end_fov)*r);
-   /*
-   Calculating distance based on vfov
-   1.154700538/(2*tan(theta/2.0))
-   */
+
+   //vertigo shot code
    float theta = this->vertical_fov*(M_PI/180.0);
    float w = 1.154700538;
    float val = w/(2*tan(theta/2.0));
    this->origin = point(0,0,val+(this->look_at.z));
-   // std::cout << "Actual Distance: " << val + -1.0 << std::endl;
 
    //update frame_settings
    update_frame_settings();

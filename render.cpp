@@ -125,6 +125,6 @@ void render_frame(camera &cam,std::string file_name) {
         ofs << r << ' ' << g << ' '<< b << std::endl;
       }
   }
-  ofs.close();
   ofs.flush();
+  ofs.close();
 }
