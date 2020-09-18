@@ -55,27 +55,38 @@ ray camera::get_ray(float &x_pos, float &y_pos) {
 
 //Updates all the parameters and sets the lower_left_corner viewport iteration pattern for each capture
 void camera::next_capture() {
-   float r = float(frame_count)/float(num_frames);
+  float ratio = 0.33;
+  float r = float(frame_count)/float(num_frames);
+  float apt = 0;
+  //for controlling base shot
+  if (r < ratio) {
+    apt = r / ratio;
+    r = 0;
+  } else {
+    apt = 1;
+    r = (r-ratio)/(1.0-ratio);
+  }
    //update origin
-   // this->origin = this->camera_path.get_point_at(r);
+  this->origin = this->camera_path.get_point_at(r);
 
    //update apeture
-   this->apeture = this->start_apeture - ((this->start_apeture-this->end_apeture)*r);
+  // this->apeture = this->start_apeture - ((this->start_apeture-this->end_apeture)*r);
+  this->apeture = this->start_apeture - ((this->start_apeture-this->end_apeture)*apt);
 
    //update fov
-   this->vertical_fov = this->start_fov - ((this->start_fov-this->end_fov)*r);
+  this->vertical_fov = this->start_fov - ((this->start_fov-this->end_fov)*r);
 
    //vertigo shot code
-   float theta = this->vertical_fov*(M_PI/180.0);
-   float w = 1.154700538;
-   float val = w/(2*tan(theta/2.0));
-   this->origin = point(0,0,val+(this->look_at.z));
+   // float theta = this->vertical_fov*(M_PI/180.0);
+   // float w = 1.154700538;
+   // float val = w/(2*tan(theta/2.0));
+   // this->origin = point(0,0,val+(this->look_at.z));
 
    //update frame_settings
-   update_frame_settings();
+  update_frame_settings();
    //update frame_count
-   this->frame_count += 1;
-   if (this->frame_count == this->num_frames) {
-     this->capture_complete = true;
-   }
+  this->frame_count += 1;
+  if (this->frame_count == this->num_frames) {
+    this->capture_complete = true;
+  }
 }
