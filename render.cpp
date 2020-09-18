@@ -68,26 +68,28 @@ void render_frame(camera &cam,std::string file_name) {
   ofs.open(file_name,std::ios::out | std::ios::binary);
 
   //Initialize Materials
-  diffuse world_mat(color(.8,0.8,1.0));
-  metal gold(color(0.78,0.46,0.2),0.7);
-  metal metal_mat(color(0.8,0.8,0.8),0.5);
-  diffuse first(color(.0117,0.145,0.298));
-  diffuse second(color(0,1,0));
-  diffuse third(color(1,0,0));
+  diffuse world_mat(color(.88,0.76,0.82));
+  metal gold(color(0.78,0.46,0.2),0.5);
+  metal met(color(0.8,0.8,0.8),0.3);
+  metal rose_gold(color(0.718,.431,.475),0.7);
+  diffuse first(color(.49,0.51,0.7215));
+  diffuse second(color(.294,.561,.549));
+  diffuse third(color(0.38,.247,.459));
   dielectric glass_mat(1.5);
 
   //Initialize Spheres
   sphere world(point(0,-100.5,-1),100,&world_mat);
-  sphere center_front(point(0,-0.2,-0.2),0.3,&second);
-  sphere center(point(0.0,0.0,-1),0.5,&metal_mat);
+  sphere center_front(point(0,-0.2,-0.2),0.3,&glass_mat);
+  sphere center_front_inside(point(0,-0.2,-0.2),-0.29,&glass_mat);
+  sphere center(point(0.0,0.0,-1),0.5,&met);
   sphere center_back(point(0,0.5,-2.5),1.0,&third);
   sphere right(point(1,0.0,-1),0.5,&first);
   sphere left(point(-1,0.0,-1),0.5,&first);
-  sphere right2(point(1.5,-0.2,-0.2),0.3,&metal_mat);
-  sphere left2(point(-1.5,-0.2,-0.2),0.3,&metal_mat);
+  sphere right2(point(1.5,-0.2,-0.2),0.3,&rose_gold);
+  sphere left2(point(-1.5,-0.2,-0.2),0.3,&rose_gold);
   sphere right3(point(0.6,-0.2,0.1),0.3,&second);
   sphere left3(point(-0.6,-0.2,0.1),0.3,&second);
-  std::vector <sphere> spheres = {world,center_front,center,center_back,right,left,right2,left2,right3,left3};
+  std::vector <sphere> spheres = {world,center_front,center_front_inside,center,center_back,right,left,right2,left2,right3,left3};
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);

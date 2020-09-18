@@ -29,13 +29,13 @@ int main() {
     std::ostringstream num;
     num<<cam.frame_count;
     std::string frame_name = folder_name+num.str()+".ppm";
-    // render_frame(cam,frame_name);
+    render_frame(cam,frame_name);
     //first and last capture
-    if (cam.frame_count == 1) {
-      render_frame(cam,frame_name);
-    } else if (cam.frame_count == cam.num_frames) {
-      render_frame(cam,frame_name);
-    }
+    // if (cam.frame_count == 1) {
+    //   render_frame(cam,frame_name);
+    // } else if (cam.frame_count == cam.num_frames) {
+    //   render_frame(cam,frame_name);
+    // }
   }
   return 0;
 }
