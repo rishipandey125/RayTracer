@@ -75,7 +75,7 @@ void camera::next_capture() {
 
    //update fov
   this->vertical_fov = this->start_fov - ((this->start_fov-this->end_fov)*r);
-
+  // std::cout << this->vertical_fov << std::endl;
    //vertigo shot code
    // float theta = this->vertical_fov*(M_PI/180.0);
    // float w = 1.154700538;

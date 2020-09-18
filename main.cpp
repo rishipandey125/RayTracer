@@ -9,13 +9,13 @@ Render Frames
 
 int main() {
   //Camera Parameters
-  point camera_start(3,2,0);
-  point camera_end(0,0,0);
+  point camera_start(3,4,0);
+  point camera_end(0,1,3);
   point look_at(0,0.0,-1);
   float aspect_ratio = 16.0/9.0;
-  float start_fov = 20;
-  float end_fov = 60;
-  float start_apeture = 2.0;
+  float start_fov = 15;
+  float end_fov = 40;
+  float start_apeture = 3.0;
   float end_apeture = 0.0;
   int total_frames = 72;
   camera cam(camera_start,camera_end,look_at,aspect_ratio,
@@ -29,16 +29,13 @@ int main() {
     std::ostringstream num;
     num<<cam.frame_count;
     std::string frame_name = folder_name+num.str()+".ppm";
-    render_frame(cam,frame_name);
-    //single capture last
-    // if (cam.frame_count == cam.num_frames) {
-    //   render_frame(cam,frame_name);
-    // }
-    //single capture first
-    // if (true) {
-    //   render_frame(cam,frame_name);
-    //   break;
-    // }
+    // render_frame(cam,frame_name);
+    //first and last capture
+    if (cam.frame_count == 1) {
+      render_frame(cam,frame_name);
+    } else if (cam.frame_count == cam.num_frames) {
+      render_frame(cam,frame_name);
+    }
   }
   return 0;
 }
