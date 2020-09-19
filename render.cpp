@@ -79,21 +79,15 @@ void render_frame(camera &cam,std::string file_name) {
 
   //Initialize Spheres
   sphere world(point(0,-100.5,-1),100,&world_mat);
-  sphere center_front(point(0,-0.2,-0.2),0.3,&glass_mat);
-  sphere center_front_inside(point(0,-0.2,-0.2),-0.29,&glass_mat);
   sphere center(point(0.0,0.0,-1),0.5,&met);
-  sphere center_back(point(0,0.5,-2.5),1.0,&third);
   sphere right(point(1,0.0,-1),0.5,&first);
   sphere left(point(-1,0.0,-1),0.5,&first);
-  sphere right2(point(1.5,-0.2,-0.2),0.3,&rose_gold);
-  sphere left2(point(-1.5,-0.2,-0.2),0.3,&rose_gold);
-  sphere right3(point(0.6,-0.2,0.1),0.3,&second);
-  sphere left3(point(-0.6,-0.2,0.1),0.3,&second);
-  std::vector <sphere> spheres = {world,center_front,center_front_inside,center,center_back,right,left,right2,left2,right3,left3};
+
+  std::vector <sphere> spheres = {world,center,left,right};
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 100;
+  int samples = 1;
   //Render Details (Iterate and Create Image)
   ofs << "P3 \n" << image_width << ' ' << image_height << "\n255\n" << std::endl;
     for (int j = image_height-1; j >= 0; j--) {

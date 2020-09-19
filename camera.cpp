@@ -57,21 +57,20 @@ ray camera::get_ray(float &x_pos, float &y_pos) {
 void camera::next_capture() {
   float ratio = 0.33;
   float r = float(frame_count)/float(num_frames);
-  float apt = 0;
   //for controlling base shot
-  if (r < ratio) {
-    apt = r / ratio;
-    r = 0;
-  } else {
-    apt = 1;
-    r = (r-ratio)/(1.0-ratio);
-  }
+  // float apt = 0;
+  // if (r < ratio) {
+  //   apt = r / ratio;
+  //   r = 0;
+  // } else {
+  //   apt = 1;
+  //   r = (r-ratio)/(1.0-ratio);
+  // }
    //update origin
   this->origin = this->camera_path.get_point_at(r);
 
    //update apeture
-  // this->apeture = this->start_apeture - ((this->start_apeture-this->end_apeture)*r);
-  this->apeture = this->start_apeture - ((this->start_apeture-this->end_apeture)*apt);
+  this->apeture = this->start_apeture - ((this->start_apeture-this->end_apeture)*r);
 
    //update fov
   this->vertical_fov = this->start_fov - ((this->start_fov-this->end_fov)*r);
