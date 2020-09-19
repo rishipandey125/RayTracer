@@ -68,26 +68,25 @@ void render_frame(camera &cam,std::string file_name) {
   ofs.open(file_name,std::ios::out | std::ios::binary);
 
   //Initialize Materials
-  diffuse world_mat(color(.88,0.76,0.82));
-  metal gold(color(0.78,0.46,0.2),0.5);
+  diffuse world_mat(color(.8,0.8,0.8));
   metal met(color(0.8,0.8,0.8),0.3);
-  metal rose_gold(color(0.718,.431,.475),0.7);
-  diffuse first(color(.49,0.51,0.7215));
-  diffuse second(color(.294,.561,.549));
-  diffuse third(color(0.38,.247,.459));
+  diffuse first(color(1,0.6,0.2));
+  diffuse second(color(1,0.0,0));
   dielectric glass_mat(1.5);
 
   //Initialize Spheres
   sphere world(point(0,-100.5,-1),100,&world_mat);
   sphere center(point(0.0,0.0,-1),0.5,&met);
-  sphere right(point(1,0.0,-1),0.5,&first);
+  sphere right(point(1,0.0,-1),0.5,&second);
+  sphere right_inside(point(1,0.0,-1),-0.49,&glass_mat);
   sphere left(point(-1,0.0,-1),0.5,&first);
+  sphere behind(point(2,0.0,-3),0.5,&second);
 
   std::vector <sphere> spheres = {world,center,left,right};
 
   int image_width = 1000;
   int image_height = (int)(image_width/cam.aspect_ratio);
-  int samples = 1;
+  int samples = 100;
   //Render Details (Iterate and Create Image)
   ofs << "P3 \n" << image_width << ' ' << image_height << "\n255\n" << std::endl;
     for (int j = image_height-1; j >= 0; j--) {
